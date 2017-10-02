@@ -16,6 +16,9 @@
 /node_modules
 /yarn-error.log
 
+.ruby-gemset.*
+.ruby-version.*
+
 .byebug_history
 .rspec
 /spec/tmp
