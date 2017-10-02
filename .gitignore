@@ -17,3 +17,7 @@
 /yarn-error.log
 
 .byebug_history
+.rspec
+/spec/tmp
+
+config/database.yml
