@@ -12,6 +12,8 @@ AllCops:
     - 'db/schema.rb'
     - 'config/routes.rb'
     - 'config/deploy.rb'
+    - 'node_modules/**/*'
+    - 'bin/**/*'
   DisplayCopNames: true
 
 

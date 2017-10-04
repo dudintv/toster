@@ -62,14 +62,14 @@ gem 'rails-i18n', '~> 5.0.0'
 # Верстка
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
-gem 'slim-rails'
 gem 'simple_form'
+gem 'slim-rails'
 
 # Тестирование
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 3.6'
 end
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
