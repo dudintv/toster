@@ -23,4 +23,6 @@
 .rspec
 /spec/tmp
 
-config/database.yml
+config/database.yml/public/packs
+/public/packs-test
+/node_modules
