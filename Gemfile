@@ -56,11 +56,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Качество кода
 gem 'rubocop', require: false
 
-# Верстка
+# Перевод
+gem 'rails-i18n', '~> 5.0.0'
 
+# Верстка
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
 gem 'slim-rails'
+gem 'simple_form'
 
 # Тестирование
 group :development, :test do

@@ -38,5 +38,9 @@ module Toster
                        controller_spec: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    config.i18n.default_locale = :ru
+    config.i18n.locale = :ru
+    config.time_zone = 'Moscow'
   end
 end
