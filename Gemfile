@@ -66,6 +66,7 @@ gem 'slim-rails'
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails', '~> 3.6'
+  gem 'rails-controller-testing'
 end
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
