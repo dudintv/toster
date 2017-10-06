@@ -15,6 +15,12 @@ ru:
       question:
         title: 'Вопрос'
         body: 'Подробности'
+      answer:
+        body: 'Ответ'
+        new:
+          body: 'Новый ответ'
+        edit:
+          body: 'Отредактировать ответ'
     # Examples
     # labels:
     #   defaults:
