@@ -1,0 +1,20 @@
+.container
+  ol.breadcrumb
+    li.breadcrumb-item= link_to 'Все вопросы', questions_path
+    li.breadcrumb-item.active= @question.title.truncate(50)
+.container
+
+  h1= @question.title
+  p= @question.body
+
+  .card
+    .card-body
+      = simple_form_for @answer, url: question_answers_path(question_id: @question) do |f|
+        = f.input :body, html_input: { class: 'form-control' }
+        = f.button :submit
+
+  - @question.answers.each do |answer|
+    .card
+      .card-body
+        p.card-text= answer.body
+      .card-footer.text-muted= answer.updated_at

@@ -27,5 +27,20 @@ module Toster
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.generators do |g|
+      g.test_framework :rspec,
+                       fixtures: true,
+                       view_spec: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       request_specs: false,
+                       controller_spec: true
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+    end
+
+    config.i18n.default_locale = :ru
+    config.i18n.locale = :ru
+    config.time_zone = 'Moscow'
   end
 end
