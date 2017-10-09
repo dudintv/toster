@@ -7,11 +7,27 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
+    .navbar.navbar-dark.bg-dark.sticky-top
+      .container
+        a.navbar-brand{href='#'} Тостер
+        ul.nav.justify-content-end
+          - if current_user
+            li.nav-item
+              a.nav-link.disabled{href='#'}= 'current_user.email'
+            li.nav-item
+              = link_to 'Выйти', destroy_user_session_path, method: :delete, class: 'nav-link btn btn-secondary'
+          - else
+            li.nav-item
+              = link_to 'Зарегистрироваться', new_user_registration_path, class: 'nav-link text-light'
+            li.nav-item
+              = link_to 'Вход', new_user_session_path, class: 'nav-link btn btn-light'
     - if notice
+      br
       .container
         .alert.alert-success= notice
     - if alert
+      br
       .container
         .alert.alert-danger= alert
-
+    br
     = yield
