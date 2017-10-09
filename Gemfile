@@ -67,6 +67,7 @@ gem 'slim-rails'
 
 # Авторизация
 gem 'devise'
+gem 'devise-i18n'
 
 # Тестирование
 group :development, :test do
