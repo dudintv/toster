@@ -10,9 +10,9 @@ feature 'User sign in', %q{
     user = User.create!(email: 'first@user.com', password: 'qwerty')
 
     visit new_user_session_path
-    fill_in 'email', with: user.email
-    fill_in 'пароль', with: 'qwerty'
-    click_in 'Войти'
+    fill_in 'Email', with: user.email
+    fill_in 'Пароль', with: 'qwerty'
+    click_on 'Войти'
 
     expect(page).to have_content 'Вход в систему выполнен.'
     expect(current_path).to eq root_path
@@ -20,11 +20,11 @@ feature 'User sign in', %q{
 
   scenario 'Non-registered user try to sign in' do
     visit new_user_session_path
-    fill_in 'email', with: user.email
-    fill_in 'пароль', with: 'qwerty'
-    click_in 'Войти'
+    fill_in 'Email', with: 'some_other@email.com'
+    fill_in 'Пароль', with: 'qwerty'
+    click_on 'Войти'
 
-    expect(page).to have_content 'Email и пароль не совпали.'
-    expect(current_path).to eq root_path
+    expect(page).to have_content 'Неверный Email или пароль.'
+    expect(current_path).to eq new_user_session_path
   end
 end
