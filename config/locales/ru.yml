@@ -1,6 +1,10 @@
 ---
 ru:
   activerecord:
+    models:
+      answer: Ответ
+      question: Вопрос
+
     errors:
       messages:
         record_invalid: 'Возникли ошибки: %{errors}'
