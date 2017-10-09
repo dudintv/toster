@@ -88,6 +88,9 @@ Style/FrozenStringLiteralComment:
 Style/NumericPredicate:
   EnforcedStyle: comparison
 
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
 Style/RegexpLiteral:
   EnforcedStyle: mixed
   Enabled: false
