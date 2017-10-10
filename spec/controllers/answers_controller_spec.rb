@@ -6,6 +6,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     let(:valid_params) { { answer: attributes_for(:answer), question_id: question } }
     let(:invalid_params) { { answer: attributes_for(:invalid_answer), question_id: question } }
+    sign_in_user
 
     context 'with valid attribute' do
       it 'saves the new answer' do

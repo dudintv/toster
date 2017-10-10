@@ -6,16 +6,15 @@ feature 'Delete question', %q{
   I want to be able to delete own questions
 } do
 
-  given(:user) { create(:user) }
-
   before do
+    @user = create(:user)
     @my_question = create(:question)
-    @my_question.user = user
+    @user.questions << @my_question
     @other_question = create(:question)
   end
   
   scenario 'Authenticated user deletes own question' do
-    sign_in(user)
+    sign_in(@my_question.user)
     visit question_path(@my_question)
     click_on 'Удалить вопрос'
 
@@ -24,14 +23,14 @@ feature 'Delete question', %q{
     expect(current_path).to eq questions_path
   end
 
-  scenario 'Guest user can not delete question'
+  scenario 'Guest user can not delete question' do
     visit question_path(@my_question)
 
     expect(page).to_not have_content 'Удалить вопрос'
   end
 
   scenario 'Authenticated user try deletes foreign question' do
-    sign_in(user)
+    sign_in(@user)
     visit question_path(@other_question)
     
     expect(page).to_not have_content 'Удалить вопрос'

@@ -47,7 +47,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new question' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question)} }.to change(Question, :count).by(1)
       end
 
       it 'redirect to show view' do
@@ -71,24 +71,26 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
       before do
-        user = create(:user)
-        sign_in user
+        @user = create(:user)
+        sign_in @user
         @my_question = create(:question)
-        @my_question.user = user
+        @user.questions << @my_question
+        @other_question = create(:question)
       end
 
       it 'deletes my question' do
-        expect { delete :destroy, params: { question: attributes_for(:my_question) } }.to change(Question, :count).by(-1)
+        expect { delete :destroy, params: { id: @my_question.id } }.to change(@user.questions, :count).by(-1)
       end
 
       it 'does not delete foreign question' do
-        expect { delete :destroy, params: { question: attributes_for(:question) } }.to_not change(Question, :count)
+        expect { delete :destroy, params: { id: @other_question.id } }.to_not change(@user.questions, :count)
       end
     end
 
     context 'Guest user' do
       it 'does not delete a question' do
-        expect { delete :destroy, params: { question: attributes_for(:question) } }.to_not change(Question, :count)
+        question = create(:question)
+        expect { delete :destroy, params: { id: question.id } }.to_not change(Question, :count)
       end
     end
   end

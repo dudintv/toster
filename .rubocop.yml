@@ -50,7 +50,7 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
 
 Metrics/LineLength:
-  Max: 120
+  Max: 130
 
 Metrics/ModuleLength:
   Exclude:
