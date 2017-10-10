@@ -43,6 +43,9 @@ Lint/UselessAccessModifier:
 Lint/BooleanSymbol:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/BlockLength:
   Exclude:
     - 'Rakefile'
@@ -50,7 +53,10 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
 
 Metrics/LineLength:
-  Max: 130
+  Max: 170
+
+Metrics/MethodLength:
+  Max: 30
 
 Metrics/ModuleLength:
   Exclude:

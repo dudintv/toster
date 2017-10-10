@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'User sign up', %q{
+feature 'User sign up', '
   In order to be able to ask question
   As an User
   I want to be able to sign in
-} do
+' do
 
   given(:user) { User.new(email: 'uniq@email.com', password: 'qwerty') }
   given(:user_short_password) { User.new(email: 'uniq@email.com', password: 'qwert') }

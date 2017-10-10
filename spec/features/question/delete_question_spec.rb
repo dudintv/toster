@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Delete question', %q{
+feature 'Delete question', '
   In order to delete question
   As an authenticated user
   I want to be able to delete own questions
-} do
+' do
 
   before do
     @user = create(:user)
@@ -12,7 +12,7 @@ feature 'Delete question', %q{
     @user.questions << @my_question
     @other_question = create(:question)
   end
-  
+
   scenario 'Authenticated user deletes own question' do
     sign_in(@my_question.user)
     visit question_path(@my_question)
@@ -32,7 +32,7 @@ feature 'Delete question', %q{
   scenario 'Authenticated user try deletes foreign question' do
     sign_in(@user)
     visit question_path(@other_question)
-    
+
     expect(page).to_not have_content 'Удалить вопрос'
   end
 end

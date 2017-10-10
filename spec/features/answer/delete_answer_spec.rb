@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Delete answer', %q{
+feature 'Delete answer', '
   In order to delete answer
   As an authenticated user
   I want to be able to delete own answers
-} do
+' do
 
   before do
     @my_answer = create(:answer)
@@ -32,7 +32,7 @@ feature 'Delete answer', %q{
 
   scenario 'Guest user can not delete answer' do
     visit question_path(@my_answer.question)
-    
+
     expect(page).to_not have_content 'Удалить ответ'
   end
 

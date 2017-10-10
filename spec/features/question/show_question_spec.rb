@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Show question', %q{
+feature 'Show question', '
   In order to get content of certain question
   As an guest or authenticated user
   I want to be able to see details and answers certain question
-} do
+' do
 
   given(:user) { create(:user) }
 
@@ -25,7 +25,7 @@ feature 'Show question', %q{
 
   scenario 'Authenticated user can see list question' do
     sign_in(user)
-    
+
     visit questions_path
     click_on @question.title
 

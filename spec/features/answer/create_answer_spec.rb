@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Create answer', %q{
+feature 'Create answer', '
   In order to leave answer for a question
   As an authenticated user
   I want to be able to write answer directly on question page
-} do
+' do
 
   given(:user) { create(:user) }
 
@@ -18,7 +18,7 @@ feature 'Create answer', %q{
     expect(page).to_not have_field 'Ответ'
     expect(page).to have_content 'Чтобы оставить ответ войдите на сайт.'
   end
-  
+
   scenario 'Authenticated user see create-answer-field on question page' do
     sign_in(user)
     visit question_path(@question)
