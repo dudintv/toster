@@ -44,10 +44,12 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
+
     context 'with valid attributes' do
       it 'saves the new question' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
+
       it 'redirect to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
@@ -58,9 +60,35 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not save the question' do
         expect { post :create, params: { question: attributes_for(:invalid_question) } }.to_not change(Question, :count)
       end
+
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'Authenticated user' do
+      before do
+        user = create(:user)
+        sign_in user
+        @my_question = create(:question)
+        @my_question.user = user
+      end
+
+      it 'deletes my question' do
+        expect { delete :destroy, params: { question: attributes_for(:my_question) } }.to change(Question, :count).by(-1)
+      end
+
+      it 'does not delete foreign question' do
+        expect { delete :destroy, params: { question: attributes_for(:question) } }.to_not change(Question, :count)
+      end
+    end
+
+    context 'Guest user' do
+      it 'does not delete a question' do
+        expect { delete :destroy, params: { question: attributes_for(:question) } }.to_not change(Question, :count)
       end
     end
   end

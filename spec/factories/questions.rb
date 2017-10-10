@@ -5,10 +5,12 @@ FactoryGirl.define do
   factory :question do
     title
     body
+    user_id
   end
 
   factory :invalid_question, class: Question do
     title nil
     body nil
+    user_id
   end
 end
