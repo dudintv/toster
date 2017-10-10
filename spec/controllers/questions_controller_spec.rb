@@ -75,7 +75,7 @@ RSpec.describe QuestionsController, type: :controller do
         sign_in @user
         @my_question = create(:question)
         @user.questions << @my_question
-        @other_question = create(:question)
+        @foreign_question = create(:question)
       end
 
       it 'deletes my question' do
@@ -83,7 +83,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'does not delete foreign question' do
-        expect { delete :destroy, params: { id: @other_question.id } }.to_not change(@user.questions, :count)
+        expect { delete :destroy, params: { id: @foreign_question.id } }.to_not change(@user.questions, :count)
       end
     end
 
