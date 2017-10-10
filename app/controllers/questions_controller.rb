@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
     @questions = Question.all
   end
@@ -14,10 +16,23 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(question_params)
+    @question.user = current_user
     if @question.save
+      flash[:notice] = 'Ваш Вопрос успешно опубликован.'
       redirect_to @question
     else
       render :new
+    end
+  end
+
+  def destroy
+    @question = Question.find(params[:id])
+    if user_signed_in? && @question.user == current_user && @question.delete
+      flash[:notice] = 'Вопрос со всеми ответами успешно удален.'
+      redirect_to questions_path
+    else
+      flash[:alert] = 'Не смог удалить этот вопрос.'
+      render :show
     end
   end
 

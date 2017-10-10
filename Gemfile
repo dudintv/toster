@@ -65,6 +65,10 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'slim-rails'
 
+# Авторизация
+gem 'devise'
+gem 'devise-i18n'
+
 # Тестирование
 group :development, :test do
   gem 'factory_girl_rails'
@@ -72,5 +76,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
 end
 group :test do
+  gem 'capybara'
+  gem 'launchy'
   gem 'shoulda-matchers', '~> 3.1'
 end
