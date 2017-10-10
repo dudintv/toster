@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
+feature 'Index question', %q{
   In order to get list of questions
   As an guest or authenticated user
   I want to be able to see all questions

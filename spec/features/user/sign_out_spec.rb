@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User sign in', %q{
+feature 'User sign out', %q{
   In order to be able close session
   As an authenticated User
   I want to be able to sign out

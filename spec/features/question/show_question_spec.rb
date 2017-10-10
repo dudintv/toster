@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
+feature 'Show question', %q{
   In order to get content of certain question
   As an guest or authenticated user
   I want to be able to see details and answers certain question
