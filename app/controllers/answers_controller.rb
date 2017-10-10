@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.create(answer_params)
@@ -13,7 +15,7 @@ class AnswersController < ApplicationController
   def destroy
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:id])
-    if user_signed_in? && @answer.user == current_user && @answer.delete
+    if @answer.delete
       flash[:notice] = 'Ответ успешно удален.'
       redirect_to question_path(@question)
     else
