@@ -46,7 +46,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'does not delete foreign answer' do
-        expect { delete :destroy, params: { question_id: @foreign_answer.question.id, id: @foreign_answer.id } }.to_not change(@user.answers, :count)
+        expect { delete :destroy, params: { question_id: @foreign_answer.question.id, id: @foreign_answer.id } }.to_not change(Answer, :count)
       end
     end
 

@@ -79,11 +79,13 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'deletes my question' do
-        expect { delete :destroy, params: { id: @my_question.id } }.to change(@user.questions, :count).by(-1)
+        expect { delete :destroy, params: { id: @my_question } }.to change(@user.questions, :count).by(-1)
       end
 
       it 'does not delete foreign question' do
-        expect { delete :destroy, params: { id: @foreign_question.id } }.to_not change(@user.questions, :count)
+        puts @user.inspect
+        puts @foreign_question.inspect
+        expect { delete :destroy, params: { id: @foreign_question } }.to_not change(Question, :count)
       end
     end
 

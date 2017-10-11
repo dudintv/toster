@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
   def destroy
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:id])
-    if @answer.delete
+    if current_user == @answer.user && @answer.delete
       flash[:notice] = 'Ответ успешно удален.'
       redirect_to question_path(@question)
     else
