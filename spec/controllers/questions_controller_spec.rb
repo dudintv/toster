@@ -70,29 +70,39 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
+      let!(:user) { create(:user) }
+
       before do
-        @user = create(:user)
-        sign_in @user
-        @my_question = create(:question)
-        @user.questions << @my_question
-        @foreign_question = create(:question)
+        sign_in user
       end
 
-      it 'deletes my question' do
-        expect { delete :destroy, params: { id: @my_question } }.to change(@user.questions, :count).by(-1)
+      context 'As author' do
+        it 'deletes my question' do
+          my_question = create(:question)
+          user.questions << my_question
+          expect { delete :destroy, params: { id: my_question } }.to change(user.questions, :count).by(-1)
+        end
       end
 
-      it 'does not delete foreign question' do
-        puts @user.inspect
-        puts @foreign_question.inspect
-        expect { delete :destroy, params: { id: @foreign_question } }.to_not change(Question, :count)
+      context 'As non-author user' do
+        it 'does not delete foreign question' do
+          foreign_question = create(:question)
+          expect { delete :destroy, params: { id: foreign_question } }.to_not change(Question, :count)
+        end
       end
     end
 
     context 'Guest user' do
+      let!(:question) { create(:question) }
+
       it 'does not delete a question' do
-        question = create(:question)
         expect { delete :destroy, params: { id: question.id } }.to_not change(Question, :count)
+      end
+
+      it 'redirect to login page' do
+        delete :destroy, params: { id: question.id }
+        expect(flash[:alert]).to eq 'Вам необходимо войти в систему или зарегистрироваться.'
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end

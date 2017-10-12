@@ -6,32 +6,32 @@ feature 'Delete question', '
   I want to be able to delete own questions
 ' do
 
-  before do
-    @user = create(:user)
-    @my_question = create(:question)
-    @user.questions << @my_question
-    @other_question = create(:question)
+  given!(:user) { create(:user) }
+  given!(:my_question) do
+    user.questions << create(:question)
+    user.questions.last
   end
+  given!(:foreign_question) { create(:question) }
 
   scenario 'Authenticated user deletes own question' do
-    sign_in(@my_question.user)
-    visit question_path(@my_question)
+    sign_in(my_question.user)
+    visit question_path(my_question)
     click_on 'Удалить вопрос'
 
     expect(page).to have_content 'Вопрос со всеми ответами успешно удален.'
-    expect(page).to_not have_content @my_question.title
+    expect(page).to_not have_content my_question.title
     expect(current_path).to eq questions_path
   end
 
   scenario 'Guest user can not delete question' do
-    visit question_path(@my_question)
+    visit question_path(my_question)
 
     expect(page).to_not have_content 'Удалить вопрос'
   end
 
   scenario 'Authenticated user try deletes foreign question' do
-    sign_in(@user)
-    visit question_path(@other_question)
+    sign_in(user)
+    visit question_path(foreign_question)
 
     expect(page).to_not have_content 'Удалить вопрос'
   end

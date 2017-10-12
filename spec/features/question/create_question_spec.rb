@@ -19,6 +19,7 @@ feature 'Create question', '
 
     # save_and_open_page
 
+    expect(page).to have_content 'Сам вопрос'
     expect(page).to have_content 'Ваш Вопрос успешно опубликован.'
   end
 
@@ -26,5 +27,16 @@ feature 'Create question', '
     visit questions_path
     click_on 'Новый вопрос'
     expect(page).to have_content 'Вам необходимо войти в систему или зарегистрироваться.'
+  end
+
+  scenario 'Authenticated user can not create question with invalid data' do
+    sign_in(user)
+    visit questions_path
+    click_on 'Новый вопрос'
+    click_on 'Создать Вопрос'
+
+    expect(page).to have_content 'Тут есть проблемы:'
+    expect(page).to have_content 'Вопросне может быть пустым'
+    expect(page).to have_content 'Подробности не может быть пустым'
   end
 end
