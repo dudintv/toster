@@ -42,7 +42,7 @@ RSpec.describe AnswersController, type: :controller do
       before do
         sign_in user
       end
-      
+
       context 'As author' do
         let!(:my_answer) do
           my_answer = create(:answer)
