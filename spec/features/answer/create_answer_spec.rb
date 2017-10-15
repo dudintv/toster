@@ -23,7 +23,6 @@ feature 'Create answer', '
     click_on 'Создать Ответ'
 
     expect(page).to have_content 'Мой ответ'
-    expect(question.answers.count).to eq 1
     expect(current_path).to eq question_path(question)
   end
 

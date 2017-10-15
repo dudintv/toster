@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
+  let!(:question) { create(:question) }
 
   describe 'POST #create' do
     let(:valid_params) { { answer: attributes_for(:answer), question_id: question } }
@@ -9,28 +9,32 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attribute' do
+      let(:create_valid_answer) { post :create, params: valid_params }
+
       it 'saves the new answer' do
-        expect { post :create, params: valid_params }.to change(question.answers, :count).by(1)
+        expect { create_valid_answer }.to change(question.answers, :count).by(1)
       end
 
       it 'saves with current user as author' do
-        post :create, params: valid_params
-        expect(Answer.last.user_id).to eq @user.id
+        create_valid_answer
+        expect(assigns(:answer).user_id).to eq @user.id
       end
 
       it 'redirect to associates question' do
-        post :create, params: valid_params
+        create_valid_answer
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attribute' do
+      let(:create_invalid_answer) { post :create, params: invalid_params }
+
       it 'does not save the answer' do
-        invalid_params
-        expect { post :create, params: invalid_params }.to_not change(Question, :count)
+        expect { create_invalid_answer }.to_not change(Question, :count)
       end
+
       it 're-render associates question view' do
-        post :create, params: invalid_params
+        create_invalid_answer
         expect(response).to render_template('questions/show')
       end
     end
@@ -39,19 +43,21 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
       let!(:user) { create(:user) }
+
       before do
         sign_in user
       end
 
       context 'As author' do
-        let!(:my_answer) do
-          my_answer = create(:answer)
-          user.answers << my_answer
-          my_answer
-        end
+        let!(:my_answer) { create(:answer, user: user) }
+        let(:delete_my_answer) { delete :destroy, params: { question_id: my_answer.question.id, id: my_answer.id } }
 
         it 'deletes my answer' do
-          expect { delete :destroy, params: { question_id: my_answer.question.id, id: my_answer.id } }.to change(user.answers, :count).by(-1)
+          expect { delete_my_answer }.to change(user.answers, :count).by(-1)
+        end
+
+        it 'redirected to question page' do
+          delete_my_answer
           expect(response).to redirect_to question_path(my_answer.question)
         end
       end
@@ -68,14 +74,14 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'Guest user' do
       let!(:answer) { create(:answer) }
+      let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id } }
 
       it 'does not delete a answer' do
-        expect { delete :destroy, params: { question_id: answer.question.id, id: answer.id } }.to_not change(Answer, :count)
+        expect { guest_try_delete_answer }.to_not change(Answer, :count)
       end
 
       it 'redirected to login page' do
-        delete :destroy, params: { question_id: answer.question.id, id: answer.id }
-        expect(flash[:alert]).to eq 'Вам необходимо войти в систему или зарегистрироваться.'
+        guest_try_delete_answer
         expect(response).to redirect_to new_user_session_path
       end
     end

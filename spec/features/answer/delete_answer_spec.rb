@@ -8,19 +8,12 @@ feature 'Delete answer', '
 
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
-  given!(:my_answer) do
-    user.answers << create(:answer)
-    question.answers << user.answers.last
-    user.answers.last
-  end
-  given!(:foreign_answer) do
-    question.answers << create(:answer)
-    question.answers.last
-  end
+  given!(:my_answer) { create(:answer, question: question, user: user) }
+  given!(:foreign_answer) { create(:answer, question: question) }
 
   scenario 'Authenticated user deletes own answer' do
-    sign_in(my_answer.user)
-    visit question_path(my_answer.question)
+    sign_in(user)
+    visit question_path(question)
     click_on 'Удалить ответ'
 
     expect(page).to have_content 'Ответ успешно удален.'
