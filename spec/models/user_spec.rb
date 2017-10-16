@@ -13,15 +13,15 @@ RSpec.describe User, type: :model do
     let(:question) { create(:question, user: current_user) }
 
     it 'owner of question return true' do
-      expect(current_user.author_of?(question)).to eq true
+      expect(current_user).to be_author_of(question)
     end
 
     it 'non-owner return false' do
-      expect(foreign_user.author_of?(question)).to eq false
+      expect(foreign_user).to_not be_author_of(question)
     end
 
     it 'owner of nil return false' do
-      expect(current_user.author_of?(nil)).to eq false
+      expect(current_user).to_not be_author_of(nil)
     end
   end
 end
