@@ -6,15 +6,31 @@
 
   h1= @question.title
   p= @question.body
+  
+  - if user_signed_in? && current_user.author_of?(@question)
+    = link_to 'Удалить вопрос', question_path(@question), method: :delete
 
   .card
     .card-body
-      = simple_form_for @answer, url: question_answers_path(question_id: @question) do |f|
-        = f.input :body, html_input: { class: 'form-control' }
-        = f.button :submit
+      - if user_signed_in?
+        = simple_form_for @answer, url: question_answers_path(question_id: @question) do |f|
+          = f.error_notification
+          = f.input :body, html_input: { class: 'form-control' }
+          = f.button :submit
+      - else
+        | Чтобы оставить ответ 
+        = link_to 'войдите', new_user_session_path
+        |  на сайт.
 
   - @question.answers.each do |answer|
-    .card
+    .card(id="answer-#{answer.id}")
       .card-body
+        - if user_signed_in? && current_user.author_of?(answer)
+          .float-right
+            = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, class: 'card-link'
         p.card-text= answer.body
-      .card-footer.text-muted= answer.updated_at
+      .card-footer.text-muted
+        small= answer.updated_at
+        .float-right
+          = answer.user&.email
+
