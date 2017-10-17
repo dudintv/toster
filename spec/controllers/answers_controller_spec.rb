@@ -35,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-render associates question view' do
         create_invalid_answer
-        expect(response).to render_template('questions/show')
+        expect(response).to render_template('answers/create')
       end
     end
   end
