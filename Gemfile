@@ -80,4 +80,5 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'poltergeist'
+  gem 'database_cleaner'
 end
