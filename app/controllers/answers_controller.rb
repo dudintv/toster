@@ -3,14 +3,18 @@ class AnswersController < ApplicationController
   before_action :set_question
 
   def create
-    # @answer = @question.answers.new(answer_params)
-    @answer = Answer.new(answer_params)
-    @answer.question = @question
+    @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to question_path(@question)
+      respond_to do |format|
+        format.html { redirect_to question_path(@question) }
+        format.js
+      end
     else
-      render 'questions/show'
+      respond_to do |format|
+        format.html { render 'questions/show' }
+        format.js
+      end
     end
   end
 
