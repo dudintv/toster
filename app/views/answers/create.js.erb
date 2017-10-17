@@ -1,0 +1,6 @@
+<% if @answer.persisted? %>
+  $('#answers').append('<%= j render "answers/answer", answer: @answer %>');
+  $('#new_answer_form').html('<%= j render "answers/form", answer: Answer.new %>');
+<% else %>
+  $('#new_answer_form').html('<%= j render "answers/form", answer: @answer %>');
+<% end %>

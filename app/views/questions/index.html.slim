@@ -5,4 +5,4 @@
     .card
       .card-body
         h4.card-title= link_to question.title, question_path(question)
-        p.card-text= question.body
+        p.card-text= question.body.truncate(300)
