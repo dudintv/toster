@@ -9,7 +9,7 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attribute' do
-      let(:create_valid_answer) { post :create, params: valid_params }
+      let(:create_valid_answer) { post :create, params: valid_params, format: :js }
 
       it 'saves the new answer' do
         expect { create_valid_answer }.to change(question.answers, :count).by(1)
@@ -22,12 +22,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to associates question' do
         create_valid_answer
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to render_template 'answers/create'
       end
     end
 
     context 'with invalid attribute' do
-      let(:create_invalid_answer) { post :create, params: invalid_params }
+      let(:create_invalid_answer) { post :create, params: invalid_params, format: :js }
 
       it 'does not save the answer' do
         expect { create_invalid_answer }.to_not change(Question, :count)

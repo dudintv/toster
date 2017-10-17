@@ -16,17 +16,18 @@ feature 'Create answer', '
     expect(page).to have_content 'Чтобы оставить ответ войдите на сайт.'
   end
 
-  scenario 'Authenticated user creates answer on question page' do
+  scenario 'Authenticated user creates answer on question page', js: true do
     sign_in(user)
     visit question_path(question)
     fill_in 'Ответ', with: 'Мой ответ'
     click_on 'Создать Ответ'
 
-    expect(page).to have_content 'Мой ответ'
-    expect(current_path).to eq question_path(question)
+    within '#answers' do
+      expect(page).to have_content 'Мой ответ'
+    end
   end
 
-  scenario 'Authenticated user can not create answer with invalid data' do
+  scenario 'Authenticated user can not create answer with invalid data', js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Создать Ответ'
