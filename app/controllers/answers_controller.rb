@@ -3,15 +3,9 @@ class AnswersController < ApplicationController
   before_action :set_question
 
   def create
-    # @answer = @question.answers.new(answer_params)
-    @answer = Answer.new(answer_params)
-    @answer.question = @question
+    @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      redirect_to question_path(@question)
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def destroy
