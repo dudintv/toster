@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../feature_helper'
 
 feature 'Show question', '
   In order to get content of certain question
