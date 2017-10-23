@@ -11,12 +11,12 @@ feature 'Delete answer', '
   given!(:my_answer) { create(:answer, question: question, user: user) }
   given!(:foreign_answer) { create(:answer, question: question) }
 
-  scenario 'Authenticated user deletes own answer' do
+  scenario 'Authenticated user deletes own answer', js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Удалить ответ'
 
-    expect(page).to have_content 'Ответ успешно удален.'
+    expect(page).to have_content 'Ваш ответ удален.'
     expect(page).to_not have_content my_answer.body
     expect(current_path).to eq question_path(my_answer.question)
   end

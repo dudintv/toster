@@ -32,6 +32,6 @@ feature 'Create answer', '
     visit question_path(question)
     click_on 'Создать Ответ'
 
-    expect(page).to have_content 'Новый ответне может быть пустым'
+    expect(page).to have_content 'Ответ не может быть пустым'
   end
 end

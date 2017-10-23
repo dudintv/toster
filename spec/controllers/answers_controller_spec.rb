@@ -56,7 +56,7 @@ RSpec.describe AnswersController, type: :controller do
           expect { delete_my_answer }.to change(user.answers, :count).by(-1)
         end
 
-        it 'redirected to question page' do
+        it 'render destroy.js' do
           delete_my_answer
           expect(response).to render_template('answers/destroy')
         end
@@ -68,6 +68,10 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'does not delete foreign answer' do
           expect { delete_foreign_answer }.to_not change(Answer, :count)
+        end
+
+        it 'render destroy.js' do
+          delete_foreign_answer
           expect(response).to render_template 'answers/destroy'
         end
       end
@@ -75,7 +79,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'Guest user' do
       let!(:answer) { create(:answer) }
-      let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id }, format: :js }
+      let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id } }
 
       it 'does not delete a answer' do
         expect { guest_try_delete_answer }.to_not change(Answer, :count)

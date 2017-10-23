@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer) && @answer.delete
       flash.now[:notice] = 'Ваш ответ удален.'
     else
-      flash.now[:alert] = 'Вы не можете удалить этот ответ.'
+      flash[:alert] = 'Чтобы удалить ваш ответ надо войти в систему.'
       redirect_to new_user_session_path unless user_signed_in?
     end
   end
