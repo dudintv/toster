@@ -50,7 +50,7 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'As author' do
         let!(:my_answer) { create(:answer, user: user) }
-        let(:delete_my_answer) { delete :destroy, params: { question_id: my_answer.question.id, id: my_answer.id } }
+        let(:delete_my_answer) { delete :destroy, params: { question_id: my_answer.question.id, id: my_answer.id }, format: :js }
 
         it 'deletes my answer' do
           expect { delete_my_answer }.to change(user.answers, :count).by(-1)
@@ -58,23 +58,24 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'redirected to question page' do
           delete_my_answer
-          expect(response).to redirect_to question_path(my_answer.question)
+          expect(response).to render_template('answers/destroy')
         end
       end
 
       context 'As non-author user' do
         let!(:foreign_answer) { create(:answer) }
+        let(:delete_foreign_answer) { delete :destroy, params: { question_id: foreign_answer.question.id, id: foreign_answer.id }, format: :js }
 
         it 'does not delete foreign answer' do
-          expect { delete :destroy, params: { question_id: foreign_answer.question.id, id: foreign_answer.id } }.to_not change(Answer, :count)
-          expect(response).to render_template 'questions/show'
+          expect { delete_foreign_answer }.to_not change(Answer, :count)
+          expect(response).to render_template 'answers/destroy'
         end
       end
     end
 
     context 'Guest user' do
       let!(:answer) { create(:answer) }
-      let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id } }
+      let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id }, format: :js }
 
       it 'does not delete a answer' do
         expect { guest_try_delete_answer }.to_not change(Answer, :count)

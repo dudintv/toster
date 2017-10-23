@@ -3,7 +3,7 @@
     .card-body
       - if user_signed_in? && current_user.author_of?(answer)
         .float-right
-          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}
+          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
       p.card-text= answer.body
     .card-footer.text-muted
       small= answer.updated_at

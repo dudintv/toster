@@ -1,0 +1,6 @@
+<% if @answer.destroyed? %>
+  $('#answers').find('#answer-<%= @answer.id %>').remove();
+  $('#flash-messages').html("<div class='container'><div class='alert alert-success'><%= flash[:notice] %><div></div>");
+<% else %>
+  $('#flash-messages').html("<div class='container'><div class='alert alert-danger'><%= flash[:alert] %><div></div>");
+<% end %>

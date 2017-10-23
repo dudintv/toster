@@ -21,13 +21,12 @@ html
               = link_to 'Зарегистрироваться', new_user_registration_path, class: 'nav-link text-light'
             li.nav-item
               = link_to 'Вход', new_user_session_path, class: 'nav-link btn btn-light'
-    - if notice
-      br
-      .container
-        .alert.alert-success= notice
-    - if alert
-      br
-      .container
-        .alert.alert-danger= alert
-    br
+    #flash-messages
+      - if notice
+        .container
+          .alert.alert-success= notice
+      - if alert
+        .container
+          .alert.alert-danger= alert
+
     = yield

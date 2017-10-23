@@ -1,2 +1,9 @@
-$('#new_answer_form').html('<%= j render "answers/form", answer: @answer %>');
-$('#answers').append('<%= j render @answer %>');
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message|%>
+    $('#form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
+  <% end %>
+<% else %>
+  $('#answers').append('<%= j render @answer %>');
+  $('#answer_body').val('');
+  $('#form-answer-errors').empty();
+<% end %>

@@ -11,11 +11,10 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
     if current_user.author_of?(@answer) && @answer.delete
-      flash[:notice] = 'Ответ успешно удален.'
-      redirect_to question_path(@question)
+      flash.now[:notice] = 'Ваш ответ удален.'
     else
-      flash[:alert] = 'Не смог удалить этот ответ.'
-      render 'questions/show'
+      flash.now[:alert] = 'Вы не можете удалить этот ответ.'
+      redirect_to new_user_session_path unless user_signed_in?
     end
   end
 
