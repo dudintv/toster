@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
   end
 
   def set_as_best
-    if current_user.author_of?(@question)
+    if current_user.author_of?(@answer.question)
       @answer.set_as_best
     else
       flash.now[:alert] = 'Вы не можете устанавливать лучший ответ на чужой вопрос.'

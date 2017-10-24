@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let!(:user)     { create(:user) }
   let!(:question) { create(:question) }
+  let!(:answer)   { create(:answer) }
+  let!(:my_question) { create(:question, user: user) }
+  let!(:my_answer) { create(:answer, user: user) }
+  let(:valid_params) { { answer: attributes_for(:answer), question_id: question } }
+  let(:invalid_params) { { answer: attributes_for(:invalid_answer), question_id: question } }
 
   describe 'POST #create' do
-    let(:valid_params) { { answer: attributes_for(:answer), question_id: question } }
-    let(:invalid_params) { { answer: attributes_for(:invalid_answer), question_id: question } }
     sign_in_user
 
     context 'with valid attribute' do
@@ -42,14 +46,11 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
-      let!(:user) { create(:user) }
-
       before do
         sign_in user
       end
 
       context 'As author' do
-        let!(:my_answer) { create(:answer, user: user) }
         let(:delete_my_answer) { delete :destroy, params: { question_id: my_answer.question.id, id: my_answer.id }, format: :js }
 
         it 'deletes my answer' do
@@ -63,8 +64,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'As non-author user' do
-        let!(:foreign_answer) { create(:answer) }
-        let(:delete_foreign_answer) { delete :destroy, params: { question_id: foreign_answer.question.id, id: foreign_answer.id }, format: :js }
+        let(:delete_foreign_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id }, format: :js }
 
         it 'does not delete foreign answer' do
           expect { delete_foreign_answer }.to_not change(Answer, :count)
@@ -78,7 +78,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'Guest user' do
-      let!(:answer) { create(:answer) }
       let(:guest_try_delete_answer) { delete :destroy, params: { question_id: answer.question.id, id: answer.id } }
 
       it 'does not delete a answer' do
@@ -88,6 +87,43 @@ RSpec.describe AnswersController, type: :controller do
       it 'redirected to login page' do
         guest_try_delete_answer
         expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  describe 'POST #set_as_best' do
+    context 'Authenticated user' do
+      before do
+        sign_in user
+      end
+
+      context 'As author of question' do
+        let!(:answer_of_my_question) { create(:answer, question: my_question) }
+        let(:set_best_answer_of_my_question) { post :set_as_best, params: { question_id: answer_of_my_question.question.id, id: answer_of_my_question.id }, format: :js }
+
+        it 'change answer_of_my_question.best from false to true' do
+          set_best_answer_of_my_question
+          answer_of_my_question.reload
+          # expect { set_best_answer_of_my_question }.to change(answer_of_my_question, :best).to(true)
+          expect(assigns(:answer).best).to eq true
+          expect(answer_of_my_question.best).to eq true
+        end
+      end
+
+      context 'As non-author of question' do
+        let(:set_best_answer_of_foreign_question) { post :set_as_best, params: { question_id: question.id, id: answer.id }, format: :js }
+
+        it 'NOT change answer.best' do
+          expect { set_best_answer_of_foreign_question }.to_not change(answer, :best)
+        end
+      end
+    end
+
+    context 'As guest' do
+      let(:guest_set_best_answer) { post :set_as_best, params: { question_id: question.id, id: answer.id }, format: :js }
+
+      it 'NOT change answer.best' do
+        expect { guest_set_best_answer }.to_not change(answer, :best)
       end
     end
   end
