@@ -1,11 +1,19 @@
 - if answer.persisted?
-  .card(id="answer-#{answer.id}")
+  .card(id="answer-#{answer.id}" class=("border-success" if answer.best))
+    - if answer.best
+      .card-header.text-white.bg-success
+        = fa_icon 'star', text: 'Лучший ответ'
     .card-body
-      - if user_signed_in? && current_user.author_of?(answer)
+      - if user_signed_in?
         .float-right
-          = link_to 'Удалить ответ', question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
+          - if @question.user == current_user && !answer.best
+            = link_to best_question_answer_path(@question, answer), method: :post, class: 'card-link', remote: true do
+              = fa_icon 'star', text: 'Выбрать ответ как лучший'
+          - if current_user.author_of?(answer)
+            = link_to question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
+              = fa_icon 'trash', text: 'Удалить ответ'
       p.card-text= answer.body
     .card-footer.text-muted
-      small= answer.updated_at
+      small= "#{answer.created_at} / #{answer.updated_at}"
       .float-right
         = answer.user&.email
