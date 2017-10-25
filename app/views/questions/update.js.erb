@@ -1,0 +1,11 @@
+$('#question-errors').html('');
+
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |msg|%>
+    $('#question-errors').removeClass('d-none').append("<li class='list-group-item list-group-item-danger'><%= j msg %></ul>")
+    set_alert("<%= flash[:alert] %>");
+  <% end %>
+<% else %>
+  $('#question-block').html("<%= j render @question %>");
+  set_notice("<%= flash[:notice] %>");
+<% end %>

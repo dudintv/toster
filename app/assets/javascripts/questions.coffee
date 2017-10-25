@@ -1,3 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+question_ready = ->
+  $('#question-block').on 'click', '#edit-question-link', (e) ->
+    $('#edit-question-form').removeClass 'd-none'
+    $('#question').addClass 'd-none'
+    e.preventDefault()
+
+$(document).on('turbolinks:load', question_ready)
