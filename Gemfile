@@ -73,6 +73,7 @@ gem 'devise-i18n'
 # Тестирование
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.6'
 end
