@@ -102,11 +102,7 @@ RSpec.describe AnswersController, type: :controller do
         let(:set_best_answer_of_my_question) { post :set_as_best, params: { question_id: answer_of_my_question.question.id, id: answer_of_my_question.id }, format: :js }
 
         it 'change answer_of_my_question.best from false to true' do
-          set_best_answer_of_my_question
-          answer_of_my_question.reload
-          # expect { set_best_answer_of_my_question }.to change(answer_of_my_question, :best).to(true)
-          expect(assigns(:answer).best).to eq true
-          expect(answer_of_my_question.best).to eq true
+          expect { set_best_answer_of_my_question }.to change { answer_of_my_question.reload.best }.from(false).to(true)
         end
       end
 
