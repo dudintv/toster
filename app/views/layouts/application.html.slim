@@ -9,7 +9,7 @@ html
   body
     .navbar.navbar-dark.bg-dark.sticky-top
       .container
-        a.navbar-brand{href='#'} Тостер
+        = link_to 'Тостер', root_path, class: 'navbar-brand'
         ul.nav.justify-content-end
           - if current_user
             li.nav-item

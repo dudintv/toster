@@ -25,6 +25,15 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def update
+    @question = Question.find(params[:id])
+    if @question.update(question_params)
+      flash.now[:notice] = 'Ваш ответ обновлен.'
+    else
+      flash.now[:alert] = 'Невозможно обновить этот вопрос.'
+    end
+  end
+
   def destroy
     @question = Question.find(params[:id])
     if current_user.author_of?(@question) && @question.delete
@@ -40,5 +49,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def set_question
+    @question = Question.find(params[:question_id])
   end
 end

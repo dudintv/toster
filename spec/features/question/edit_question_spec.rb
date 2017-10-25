@@ -11,21 +11,30 @@ feature 'Edit question', '
 
   scenario 'Author of question edit own question', js: true do
     sign_in(user)
-
     visit question_path(my_question)
-    click_on 'Редактировать вопрос'
 
-    expect(page).to have_content 'Редактирование вопроса'
-    expect(page).to_not have_content my_question.title
-    expect(page).to_not have_content my_question.body
-    expect(page).to_not have_link 'Редактировать вопрос'
+    within '#question-block' do
+      click_on 'Редактировать вопрос'
+      # save_and_open_page
+      # pry
 
-    fill_in 'Вопрос', with: 'Обновленный вопрос'
-    fill_in 'Подробности', with: 'Обновленные подробности'
-    click_on 'Сохранить Вопрос'
+      # Появилась форма редактирования:
+      expect(page).to have_content 'Редактирование вопроса'
+      # Исходный вопрос был скрыт:
+      expect(page).to_not have_content my_question.title
+      expect(page).to_not have_content my_question.body
+      expect(page).to_not have_link 'Редактировать вопрос'
 
-    expect(page).to_not have_content 'Редактирование вопроса'
-    expect(page).to have_content 'Обновленный вопрос'
-    expect(page).to have_content 'Обновленные подробности'
+      # Заполним новыми данными
+      fill_in 'Вопрос', with: 'Обновленный вопрос'
+      fill_in 'Подробности', with: 'Обновленные подробности'
+      click_on 'Сохранить Вопрос'
+
+      # wait_for_ajax
+
+      expect(page).to_not have_content 'Редактирование вопроса'
+      expect(page).to have_content 'Обновленный вопрос'
+      expect(page).to have_content 'Обновленные подробности'
+    end
   end
 end
