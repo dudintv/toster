@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
-    if @question.update(question_params)
+    if current_user.author_of?(@question) && @question.update(question_params)
       flash.now[:notice] = 'Ваш ответ обновлен.'
     else
       flash.now[:alert] = 'Невозможно обновить этот вопрос.'

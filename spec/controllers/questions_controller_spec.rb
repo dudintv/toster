@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let!(:user) { create(:user) }
   let(:question) { create(:question) }
 
   describe 'GET #index' do
@@ -73,6 +74,58 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-renders new view' do
         create_invalid_question
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'POST #update' do
+    context 'Authenticated user' do
+      before do
+        sign_in user
+      end
+
+      context 'As author' do
+        let!(:my_question) { create(:question, user: user) }
+        let(:update_my_question_valid) { post :update, params: { id: my_question.id, question: { title: 'edited title', body: 'edited body' }, format: :js } }
+        let(:update_my_question_invalid) { post :update, params: { id: my_question.id, question: { title: '', body: '' }, format: :js } }
+
+        it 'update my question with valid inputs' do
+          update_my_question_valid
+          expect(assigns(:question).title).to eq 'edited title'
+          expect(assigns(:question).body).to eq 'edited body'
+        end
+
+        it 'not update my question with invalid inputs' do
+          expect { update_my_question_invalid }.to_not change { my_question.reload.title }
+          expect { update_my_question_invalid }.to_not change { my_question.reload.body }
+          expect { update_my_question_invalid }.to_not change { my_question.reload.updated_at }
+        end
+      end
+
+      context 'As non-author user' do
+        let!(:foreign_question) { create(:question) }
+        let(:update_foreign_question) { post :update, params: { id: foreign_question.id, question: { title: 'edited title', body: 'edited body' }, format: :js } }
+
+        it 'does not update foreign question' do
+          expect { update_foreign_question }.to_not change { foreign_question.reload.title }
+          expect { update_foreign_question }.to_not change { foreign_question.reload.body }
+          expect { update_foreign_question }.to_not change { foreign_question.reload.updated_at }
+        end
+      end
+    end
+
+    context 'Guest user' do
+      let(:update_question) { post :update, params: { id: question.id, question: { title: 'edited title', body: 'edited body' } }, format: :js }
+
+      it 'does not update a question' do
+        expect { update_question }.to_not change(question, :title)
+        expect { update_question }.to_not change(question, :body)
+        expect { update_question }.to_not change(question, :updated_at)
+      end
+
+      it 'redirect to login page' do
+        update_question
+        expect(response.status).to eq 401
       end
     end
   end
