@@ -90,7 +90,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(response.status).to eq 401
       end
     end
-  end  
+  end
 
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
