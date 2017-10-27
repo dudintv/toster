@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
     Answer.record_timestamps = false
     Answer.transaction do
       question.answers.update_all best: false
-      update! best: true unless best
+      update!(best: true) unless best
     end
     Answer.record_timestamps = true
   end
