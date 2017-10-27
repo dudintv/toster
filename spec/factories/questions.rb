@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:title) { |n| "Заголовок #{n}" }
   sequence(:body) { |n| "Подробности #{n}" }
 
