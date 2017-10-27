@@ -44,6 +44,54 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'POST #update' do
+    context 'Authenticated user' do
+      before do
+        sign_in user
+      end
+
+      context 'As author' do
+        let!(:my_answer) { create(:answer, user: user) }
+        let(:update_my_answer_valid) { post :update, params: { question_id: my_answer.question.id, id: my_answer.id, answer: { body: 'edited body' }, format: :js } }
+        let(:update_my_answer_invalid) { post :update, params: { question_id: my_answer.question.id, id: my_answer.id, answer: { body: '' }, format: :js } }
+
+        it 'update my answer with valid inputs' do
+          update_my_answer_valid
+          expect(assigns(:answer).body).to eq 'edited body'
+        end
+
+        it 'not update my answer with invalid inputs' do
+          expect { update_my_answer_invalid }.to_not change { my_answer.reload.body }
+          expect { update_my_answer_invalid }.to_not change { my_answer.reload.updated_at }
+        end
+      end
+
+      context 'As non-author user' do
+        let!(:foreign_answer) { create(:answer) }
+        let(:update_foreign_answer) { post :update, params: { question_id: foreign_answer.question.id, id: foreign_answer.id, answer: { body: 'edited body' }, format: :js } }
+
+        it 'does not update foreign answer' do
+          expect { update_foreign_answer }.to_not change { foreign_answer.reload.body }
+          expect { update_foreign_answer }.to_not change { foreign_answer.reload.updated_at }
+        end
+      end
+    end
+
+    context 'Guest user' do
+      let(:update_answer) { post :update, params: { question_id: answer.question.id, id: answer.id, answer: { body: 'edited body' } }, format: :js }
+
+      it 'does not update a answer' do
+        expect { update_answer }.to_not change(answer, :body)
+        expect { update_answer }.to_not change(answer, :updated_at)
+      end
+
+      it '401 response' do
+        update_answer
+        expect(response.status).to eq 401
+      end
+    end
+  end  
+
   describe 'DELETE #destroy' do
     context 'Authenticated user' do
       before do
