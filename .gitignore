@@ -24,6 +24,7 @@
 /spec/tmp
 
 config/database.yml
+/public/uploads
 /public/packs
 /public/packs-test
 /node_modules
