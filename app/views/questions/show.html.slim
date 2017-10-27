@@ -5,20 +5,12 @@
 .container
 
   / САМ ВОПРОС
-  - if user_signed_in? && current_user.author_of?(@question)
-    .float-right
-      = link_to 'Удалить вопрос', question_path(@question), method: :delete, data: {confirm: 'Точно удалить?'}
-
-  h1= @question.title
-  p= @question.body
-  
+  #question-block= render 'question', question: @question
 
   / НОВЫЙ ОТВЕТ
-  #new_answer_form
-    = render 'answers/form', answer: @answer
+  #new-answer-form= render 'answers/form', answer: @answer
 
   / ВСЕ ОТВЕТЫ
   #answers
     - @question.answers.each do |answer|
       = render 'answers/answer', answer: answer
-

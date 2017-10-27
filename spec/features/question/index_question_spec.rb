@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../feature_helper'
 
 feature 'Index question', '
   In order to get list of questions

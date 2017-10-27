@@ -61,6 +61,7 @@ gem 'rails-i18n', '~> 5.0.0'
 
 # Верстка
 gem 'bootstrap', '~> 4.0.0.beta'
+gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'slim-rails'
@@ -72,6 +73,8 @@ gem 'devise-i18n'
 # Тестирование
 group :development, :test do
   gem 'factory_girl_rails'
+  gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.6'
 end

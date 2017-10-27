@@ -4,6 +4,12 @@ ru:
     models:
       answer: Ответ
       question: Вопрос
+    attributes:
+      answer:
+        body: "Ответ"
+      question:
+        title: "Вопрос"
+        body: "Подробности вопроса"
 
     errors:
       messages:

@@ -1,9 +1,3 @@
 .container
   h1 Новый вопрос
-  = simple_form_for(@question, html: { class: 'form-horizontal' }) do |f|
-    = f.error_notification
-
-    = f.input :title
-    = f.input :body
-
-    = f.button :submit
+  = render 'form', question: @question

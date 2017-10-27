@@ -1,0 +1,9 @@
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message|%>
+    $('#answer-<%= @answer.id %>').find('.form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
+  <% end %>
+<% else %>
+  console.log("UPDATE <%= @answer.inspect %>");
+  $('#answer-<%= @answer.id %>').find('form-answer-errors').empty();
+  $('#answer-<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+<% end %>

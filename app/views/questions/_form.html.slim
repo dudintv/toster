@@ -1,0 +1,8 @@
+= simple_form_for question, html: { class: 'form-horizontal' }, remote: true do |f|
+  ul.list-group.d-none#question-errors
+  = f.error_notification
+
+  = f.input :title
+  = f.input :body, input_html: {rows: 10}
+
+  = f.button :submit
