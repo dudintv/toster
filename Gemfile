@@ -61,6 +61,7 @@ gem 'rails-i18n', '~> 5.0.0'
 
 # Верстка
 gem 'bootstrap', '~> 4.0.0.beta'
+gem 'cocoon'
 gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'simple_form'

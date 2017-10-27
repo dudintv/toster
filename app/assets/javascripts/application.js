@@ -16,6 +16,7 @@
 //= require jquery-ujs
 //= require popper
 //= require bootstrap-sprockets
+//= require cocoon
 //= require_tree .
 
 var autohide_flash_messages = function(){
