@@ -30,6 +30,19 @@ feature 'Edit answer', '
     end
   end
 
+  scenario 'Author of answer can not update answer with invalid data', js: true do
+    sign_in(user)
+    visit question_path(my_answer.question)
+
+    within "#answer-#{my_answer.id}" do
+      click_on 'Редактировать ответ'
+      fill_in 'Ответ', with: ''
+      click_on 'Сохранить Ответ'
+
+      expect(page).to have_content 'Ответ не может быть пустым'
+    end
+  end
+
   scenario 'Non-author can not see edit-link of answer' do
     sign_in(user)
     visit question_path(question)
