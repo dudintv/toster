@@ -11,7 +11,7 @@ feature 'Edit answer', '
   given!(:my_answer) { create(:answer, question: question, user: user) }
   given!(:foreign_answer) { create(:answer, question: question) }
 
-  scenario 'Author of answer edit own answer' do
+  scenario 'Author of answer edit own answer', js: true do
     sign_in(user)
     visit question_path(question)
 
@@ -20,8 +20,6 @@ feature 'Edit answer', '
 
       # Появилась форма редактирования:
       expect(page).to have_content 'Редактирование ответа'
-      # Исходный ответ был скрыт:
-      expect(page).to_not have_content my_answer.body
       expect(page).to_not have_link 'Редактировать ответа'
 
       fill_in 'Ответ', with: 'Обновленный ответ'

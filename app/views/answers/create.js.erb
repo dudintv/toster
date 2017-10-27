@@ -1,6 +1,6 @@
 <% if @answer.errors.present? %>
   <% @answer.errors.full_messages.each do |message|%>
-    $('#form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
+    $('#new-answer-form').find('.form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
   $('#answers').append('<%= j render @answer %>');

@@ -1,18 +1,24 @@
 - if answer.persisted?
-  .card(id="answer-#{answer.id}" class=("border-success" if answer.best))
+  .card.answer-block(id="answer-#{answer.id}" class=("border-success" if answer.best))
     - if answer.best
       .card-header.text-white.bg-success
         = fa_icon 'star', text: 'Лучший ответ'
     .card-body
-      - if user_signed_in?
-        .float-right
-          - if @question.user == current_user && !answer.best
-            = link_to best_question_answer_path(@question, answer), method: :post, class: 'card-link', remote: true do
-              = fa_icon 'star', text: 'Выбрать ответ как лучший'
-          - if current_user.author_of?(answer)
-            = link_to question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
-              = fa_icon 'trash', text: 'Удалить ответ'
-      p.card-text= answer.body
+      .answer
+        - if user_signed_in?
+          .float-right
+            - if current_user.author_of?(@question) && !answer.best
+              = link_to best_question_answer_path(@question, answer), method: :post, class: 'card-link', remote: true do
+                = fa_icon 'star', text: 'Выбрать ответ как лучший'
+            - if current_user.author_of?(answer)
+              = link_to '#', class: 'card-link edit-answer-link'
+                = fa_icon 'edit', text: 'Редактировать ответ'
+              = link_to question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
+                = fa_icon 'trash', text: 'Удалить ответ'
+        p.card-text= answer.body
+      .edit-answer-form.d-none
+        h1 Редактирование ответа
+        = render 'answers/form', answer: answer
     .card-footer.text-muted
       small= "#{answer.created_at} / #{answer.updated_at}"
       .float-right

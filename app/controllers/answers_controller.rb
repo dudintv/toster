@@ -9,6 +9,15 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
+  def update
+    if current_user.author_of?(@answer) && @answer.update(answer_params)
+      flash.now[:notice] = 'Ваш ответ обновлен.'
+    else
+      flash[:alert] = 'Чтобы обновить ваш ответ надо войти в систему.'
+      redirect_to new_user_session_path unless user_signed_in?
+    end
+  end
+
   def destroy
     if current_user.author_of?(@answer) && @answer.delete
       flash.now[:notice] = 'Ваш ответ удален.'
