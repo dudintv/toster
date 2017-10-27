@@ -6,6 +6,8 @@ RSpec.describe Answer, type: :model do
 
   it { should validate_presence_of(:body) }
 
+  it { should accept_nested_attributes_for(:attachments) }
+
   it { should have_db_column(:best).of_type(:boolean).with_options(default: false) }
 
   describe '#set_as_best' do

@@ -66,6 +66,9 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'slim-rails'
 
+# Изображения
+gem 'carrierwave', '~> 1.0'
+
 # Авторизация
 gem 'devise'
 gem 'devise-i18n'
