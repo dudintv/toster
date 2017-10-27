@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @question.attachments.build
   end
 
   def create
@@ -36,7 +37,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
-    if current_user.author_of?(@question) && @question.delete
+    if current_user.author_of?(@question) && @question.destroy
       flash[:notice] = 'Вопрос со всеми ответами успешно удален.'
       redirect_to questions_path
     else
@@ -48,7 +49,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, attachment_attributes: [:id, :file, :_destroy])
+    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
   end
 
   def set_question

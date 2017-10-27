@@ -17,8 +17,6 @@ feature 'Create question', '
     fill_in 'Подробности', with: 'Подробности'
     click_on 'Создать Вопрос'
 
-    # save_and_open_page
-
     expect(page).to have_content 'Сам вопрос'
     expect(page).to have_content 'Ваш Вопрос успешно опубликован.'
   end

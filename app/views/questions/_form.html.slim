@@ -1,8 +1,12 @@
-= simple_form_for question, html: { class: 'form-horizontal' }, remote: true do |f|
+= simple_form_for question, html: { class: 'form-horizontal' }, remote: true, authenticity_token: true do |f|
   ul.list-group.d-none#question-errors
   = f.error_notification
 
   = f.input :title
   = f.input :body, input_html: {rows: 10}
+
+  h5 Прикрепить файлы
+  = f.simple_fields_for :attachments do |a|
+    = render 'attachments/attachment', a: a
 
   = f.button :submit
