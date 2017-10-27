@@ -1,2 +1,11 @@
+scss:
+  enabled: false
+
+coffeescript:
+  enabled: false
+
+jshint:
+  enabled: false
+
 ruby:
   config_file: .rubocop.yml
