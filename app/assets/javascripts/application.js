@@ -14,6 +14,7 @@
 //= require turbolinks
 //= require jquery3
 //= require jquery-ujs
+//= require jquery.remotipart
 //= require popper
 //= require bootstrap-sprockets
 //= require cocoon

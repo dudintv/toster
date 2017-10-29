@@ -6,8 +6,10 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.includes(:answers).find(params[:id])
+    # @question = Question.includes(:answers).find(params[:id])
+    @question = Question.includes(:attachments, answers: [:attachments]).find(params[:id])
     @answer = Answer.new
+    @answer.attachments.build
   end
 
   def new

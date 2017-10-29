@@ -3,7 +3,12 @@
     $('#new-answer-form').find('.form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  $('#answers').append('<%= j render @answer %>');
+  <% if remotipart_submitted? %>
+    $('#answers').append('<%= j "#{render @answer}" %>');
+  <% else %>
+    $('#answers').append('<%= j render @answer %>');
+  <% end %>
+  
   $('#answer_body').val('');
   $('#form-answer-errors').empty();
 <% end %>

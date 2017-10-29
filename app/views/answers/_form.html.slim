@@ -1,10 +1,15 @@
 .card
   .card-body
     - if user_signed_in?
-      = simple_form_for [@question, answer], remote: true do |f|
+      = simple_form_for [@question, answer], authenticity_token: true, remote: true do |f|
         .form-answer-errors
         = f.error_notification
         = f.input :body, html_input: { class: 'form-control' }
+        
+        h6 Прикрепить файлы
+        = f.simple_fields_for :attachments do |a|
+          = render 'attachments/attachment', a: a
+
         = f.button :submit
     - else
       | Чтобы оставить ответ 
