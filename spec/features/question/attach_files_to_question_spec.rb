@@ -18,6 +18,6 @@ feature 'Attach files to Question', '
     attach_file 'question[attachments_attributes][0][file]', "#{Rails.root}/spec/rails_helper.rb"
     click_on 'Создать Вопрос'
 
-    expect(page).to have_link('rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb') 
+    expect(page).to have_link('rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb')
   end
 end
