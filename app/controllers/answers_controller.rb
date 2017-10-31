@@ -7,6 +7,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+    if params[:answer][:attachments_attributes].present?
+      params[:answer][:attachments_attributes]['0'][:file].each do |a|
+        @answer.attachments.create!(file: a)
+      end
+    end
   end
 
   def update

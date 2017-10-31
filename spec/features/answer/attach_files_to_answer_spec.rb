@@ -11,17 +11,17 @@ feature 'Attach files to Answer', '
   given!(:answer) { create(:answer, question: question, user: user) }
   given!(:attachment) { create(:attachment, attachable: answer) }
 
-  scenario 'Authenticated user creates answer with attach file', js: true do
+  scenario 'Authenticated user creates answer with attach one file', js: true do
     sign_in(user)
     visit question_path(question)
 
     fill_in 'Ответ', with: 'Мой ответ с файлом'
-    attach_file 'answer[attachments_attributes][0][file]', "#{Rails.root}/README.md"
+    attach_file 'answer[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
     click_on 'Создать Ответ'
 
     # очищается поле ввода файлов
     eventually do
-      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file]').value).to eq ''
+      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file][]').value).to eq ''
     end
 
     within('#answers') do
@@ -29,7 +29,26 @@ feature 'Attach files to Answer', '
     end
   end
 
-  scenario 'Author of answer deletes attached file', js: true do
+  scenario 'Authenticated user creates answer with attach mulyiple files', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    fill_in 'Ответ', with: 'Мой ответ с файлом'
+    attach_file 'answer[attachments_attributes][0][file][]', ["#{Rails.root}/README.md", "#{Rails.root}/config.ru"]
+    click_on 'Создать Ответ'
+
+    # очищается поле ввода файлов
+    eventually do
+      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file][]').value).to eq ''
+    end
+
+    within('#answers') do
+      expect(page).to have_link('README.md', href: '/uploads/attachment/file/2/README.md')
+      expect(page).to have_link('config.ru', href: '/uploads/attachment/file/3/config.ru')
+    end
+  end
+
+  scenario 'Author of answer deletes own attached file', js: true do
     sign_in(user)
     visit question_path(question)
 

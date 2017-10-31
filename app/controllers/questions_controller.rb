@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # @question = Question.includes(:answers).find(params[:id])
     @question = Question.includes(:attachments, answers: [:attachments]).find(params[:id])
     @answer = Answer.new
     @answer.attachments.build
@@ -21,6 +20,11 @@ class QuestionsController < ApplicationController
     @question = Question.create(question_params)
     @question.user = current_user
     if @question.save
+      if params[:question][:attachments_attributes].present?
+        params[:question][:attachments_attributes]['0'][:file].each do |a|
+          @question.attachments.create!(file: a)
+        end
+      end
       flash[:notice] = 'Ваш Вопрос успешно опубликован.'
       redirect_to @question
     else
