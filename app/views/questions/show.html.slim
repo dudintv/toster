@@ -6,14 +6,8 @@
 
   / САМ ВОПРОС
   #question-block= render 'question', question: @question
-  -if @question.attachments.present?
-    h5 Прикрепленные файлы
-    ul.list-group
-      - @question.attachments.each do |attach|
-        li.list-group-item
-          = link_to attach.file.url do
-            = fa_icon 'file', text: attach.file.file.filename
-
+  / ФАЙЛЫ
+  = render 'attachments/attachments', attachable: @question
 
   / НОВЫЙ ОТВЕТ
   #new-answer-form= render 'answers/form', answer: @answer

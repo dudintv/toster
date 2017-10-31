@@ -7,22 +7,37 @@ feature 'Attach files to Answer', '
 ' do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given!(:question) { create(:question) }
+  given!(:answer) { create(:answer, question: question, user: user) }
+  given!(:attachment) { create(:attachment, attachable: answer) }
 
-  scenario 'Authenticated user creates question with attach file', js: true do
+  scenario 'Authenticated user creates answer with attach file', js: true do
     sign_in(user)
     visit question_path(question)
 
     fill_in 'Ответ', with: 'Мой ответ с файлом'
-    attach_file 'answer[attachments_attributes][0][file]', "#{Rails.root}/spec/rails_helper.rb"
+    attach_file 'answer[attachments_attributes][0][file]', "#{Rails.root}/README.md"
     click_on 'Создать Ответ'
 
+    # очищается поле ввода файлов
     eventually do
       expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file]').value).to eq ''
     end
 
     within('#answers') do
-      expect(page).to have_link('rails_helper.rb', href: '/uploads/attachment/file/1/rails_helper.rb')
+      expect(page).to have_link('README.md', href: '/uploads/attachment/file/2/README.md')
+    end
+  end
+
+  scenario 'Author of answer deletes attached file', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    within("#attachment-#{attachment.id}") do
+      click_on 'Удалить файл'
+    end
+    within("#answer-#{answer.id}") do
+      expect(page).to have_no_link(attachment.file.filename, href: "/uploads/attachment/file/1/#{attachment.file.filename}")
     end
   end
 end

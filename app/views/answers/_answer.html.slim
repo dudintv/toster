@@ -17,13 +17,8 @@
                 = fa_icon 'trash', text: 'Удалить ответ'
         p.card-text= answer.body
 
-        -if answer.attachments.present?
-          h5 Прикрепленные файлы
-          ul.list-group
-            - answer.attachments.each do |attach|
-              li.list-group-item
-                = link_to attach.file.url do
-                  = fa_icon 'file', text: attach.file.file.filename
+        / ФАЙЛЫ
+        = render 'attachments/attachments', attachable: answer
 
       .edit-answer-form.d-none
         h1 Редактирование ответа
