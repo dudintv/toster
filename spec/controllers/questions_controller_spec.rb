@@ -123,7 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect { update_question }.to_not change(question, :updated_at)
       end
 
-      it 'redirect to login page' do
+      it '401 status' do
         update_question
         expect(response.status).to eq 401
       end
