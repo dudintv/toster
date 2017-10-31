@@ -25,7 +25,7 @@ feature 'Attach files to Answer', '
     end
 
     within('#answers') do
-      expect(page).to have_link('README.md', href: '/uploads/attachment/file/2/README.md')
+      expect(page).to have_link('README.md', href: /\/uploads\/attachment\/file\/\d*\/README\.md/)
     end
   end
 
@@ -43,8 +43,8 @@ feature 'Attach files to Answer', '
     end
 
     within('#answers') do
-      expect(page).to have_link('README.md', href: '/uploads/attachment/file/2/README.md')
-      expect(page).to have_link('config.ru', href: '/uploads/attachment/file/3/config.ru')
+      expect(page).to have_link('README.md', href: /\/uploads\/attachment\/file\/\d*\/README.md/)
+      expect(page).to have_link('config.ru', href: /\/uploads\/attachment\/file\/\d*\/config.ru/)
     end
   end
 
@@ -56,7 +56,7 @@ feature 'Attach files to Answer', '
       click_on 'Удалить файл'
     end
     within("#answer-#{answer.id}") do
-      expect(page).to have_no_link(attachment.file.filename, href: "/uploads/attachment/file/1/#{attachment.file.filename}")
+      expect(page).to have_no_link(attachment.file.filename, href: /\/uploads\/attachment\/file\/\d*\/#{attachment.file.filename}/)
     end
   end
 end
