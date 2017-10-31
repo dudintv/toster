@@ -6,7 +6,9 @@ RSpec.describe AnswersController, type: :controller do
   let!(:answer)   { create(:answer) }
   let!(:my_question) { create(:question, user: user) }
   let!(:my_answer) { create(:answer, user: user) }
-  let(:valid_params) { { answer: attributes_for(:answer), question_id: question } }
+  let(:file1) { Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb") }
+  let(:file2) { Rack::Test::UploadedFile.new("#{Rails.root}/README.md") }
+  let(:valid_params) { { answer: attributes_for(:answer, attachments_attributes: { '0': { file: [file1, file2] } }), question_id: question } }
   let(:invalid_params) { { answer: attributes_for(:invalid_answer), question_id: question } }
 
   describe 'POST #create' do
@@ -22,6 +24,11 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves with current user as author' do
         create_valid_answer
         expect(assigns(:answer).user_id).to eq @user.id
+      end
+
+      it 'saves with attached files' do
+        create_valid_answer
+        expect(assigns(:answer).attachments.count).to eq 2
       end
 
       it 'redirect to associates question' do
