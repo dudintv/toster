@@ -13,3 +13,5 @@
   #edit-question-form.d-none
     h1 Редактирование вопроса
     = render 'form', question: question
+
+= render 'attachments/attachments', attachable: @question
