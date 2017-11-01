@@ -5,7 +5,7 @@
   = f.input :title
   = f.input :body, input_html: {rows: 10}
 
-  h5 Прикрепить файлы
+  h5 Добавить файлы
   = f.simple_fields_for :attachments do |a|
     = render 'attachments/attachment', a: a
 
