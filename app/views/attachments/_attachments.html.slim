@@ -4,7 +4,7 @@
     ul.list-group
       - attachable.attachments.each do |attach|
         li.list-group-item(id="attachment-#{attach.id}")
-          - if current_user.author_of?(attachable)
+          - if current_user&.author_of?(attachable)
             .float-right
               = link_to attachment_path(attach), method: :delete, remote: true do
                 = fa_icon 'trash', text: 'Удалить файл'

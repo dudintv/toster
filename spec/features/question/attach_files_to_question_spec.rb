@@ -37,6 +37,21 @@ feature 'Attach files to Question', '
     expect(page).to have_link('config.ru', href: /\/uploads\/attachment\/file\/\d*\/config.ru/)
   end
 
+  scenario 'Author of question edit question and attach one more file', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    within('#question-block') do
+      click_on 'Редактировать вопрос'
+      attach_file 'question[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
+      click_on 'Сохранить Вопрос'
+
+      # Старый файл остался, и добавился новый
+      expect(page).to have_link(attachment.file.filename, href: /\/uploads\/attachment\/file\/\d*\/#{attachment.file.filename}/)
+      expect(page).to have_link('README.md', href: /\/uploads\/attachment\/file\/\d*\/README\.md/)
+    end
+  end
+
   scenario 'Author of question deletes own attached file', js: true do
     sign_in(user)
     visit question_path(question)
