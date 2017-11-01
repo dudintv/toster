@@ -69,7 +69,7 @@ gem 'slim-rails'
 
 # Изображения
 gem 'carrierwave', '~> 1.0'
-gem 'remotipart', '~> 1.2'
+gem 'remotipart', '~> 1.3'
 
 # Авторизация
 gem 'devise'
