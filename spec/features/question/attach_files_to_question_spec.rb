@@ -17,7 +17,7 @@ feature 'Attach files to Question', '
     click_on 'Новый вопрос'
     fill_in 'Вопрос', with: 'Сам вопрос'
     fill_in 'Подробности', with: 'Подробности'
-    attach_file 'question[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
+    attach_file 'question[attachments_attributes][0][file]', "#{Rails.root}/README.md"
     click_on 'Создать Вопрос'
 
     expect(page).to have_link('README.md', href: /\/uploads\/attachment\/file\/\d*\/README\.md/)
@@ -30,7 +30,11 @@ feature 'Attach files to Question', '
     click_on 'Новый вопрос'
     fill_in 'Вопрос', with: 'Сам вопрос'
     fill_in 'Подробности', with: 'Подробности'
-    attach_file 'question[attachments_attributes][0][file][]', ["#{Rails.root}/README.md", "#{Rails.root}/config.ru"]
+    attach_file 'question[attachments_attributes][0][file]', "#{Rails.root}/README.md"
+    click_on 'Добавить файл'
+    within('.nested-fields:last-child') do
+      find('input[type="file"]').set "#{Rails.root}/config.ru"
+    end
     click_on 'Создать Вопрос'
 
     expect(page).to have_link('README.md', href: /\/uploads\/attachment\/file\/\d*\/README\.md/)
@@ -43,7 +47,10 @@ feature 'Attach files to Question', '
 
     within('#question-block') do
       click_on 'Редактировать вопрос'
-      attach_file 'question[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
+      click_on 'Добавить файл'
+      within('.nested-fields:last-child') do
+        find('input[type="file"]').set "#{Rails.root}/README.md"
+      end
       click_on 'Сохранить Вопрос'
 
       # Старый файл остался, и добавился новый
@@ -56,10 +63,11 @@ feature 'Attach files to Question', '
     sign_in(user)
     visit question_path(question)
 
-    within("#attachment-#{attachment.id}") do
-      click_on 'Удалить файл'
-    end
     within('#question-block') do
+      click_on 'Редактировать вопрос'
+      click_on 'Удалить файл'
+      click_on 'Сохранить Вопрос'
+
       expect(page).to have_no_link(attachment.file.filename, href: /\/uploads\/attachment\/file\/\d*\/#{attachment.file.filename}/)
     end
   end

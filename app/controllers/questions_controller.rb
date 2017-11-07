@@ -20,7 +20,6 @@ class QuestionsController < ApplicationController
     @question = Question.create(question_params)
     @question.user = current_user
     if @question.save
-      save_attachments
       flash[:notice] = 'Ваш Вопрос успешно опубликован.'
       redirect_to @question
     else
@@ -31,7 +30,6 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     if current_user.author_of?(@question) && @question.update(question_params)
-      save_attachments
       flash.now[:notice] = 'Ваш ответ обновлен.'
     else
       flash.now[:alert] = 'Невозможно обновить этот вопрос.'
@@ -57,13 +55,5 @@ class QuestionsController < ApplicationController
 
   def set_question
     @question = Question.find(params[:question_id])
-  end
-
-  def save_attachments
-    if params[:question][:attachments_attributes].present?
-      params[:question][:attachments_attributes]['0'][:file].each do |a|
-        @question.attachments.create!(file: a)
-      end
-    end
   end
 end
