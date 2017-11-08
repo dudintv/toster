@@ -6,18 +6,21 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.includes(:answers).find(params[:id])
+    @question = Question.includes(:attachments, answers: [:attachments]).find(params[:id])
     @answer = Answer.new
+    @answer.attachments.build
   end
 
   def new
     @question = Question.new
+    @question.attachments.build
   end
 
   def create
     @question = Question.create(question_params)
     @question.user = current_user
     if @question.save
+      save_attachments
       flash[:notice] = 'Ваш Вопрос успешно опубликован.'
       redirect_to @question
     else
@@ -28,6 +31,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     if current_user.author_of?(@question) && @question.update(question_params)
+      save_attachments
       flash.now[:notice] = 'Ваш ответ обновлен.'
     else
       flash.now[:alert] = 'Невозможно обновить этот вопрос.'
@@ -36,7 +40,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
-    if current_user.author_of?(@question) && @question.delete
+    if current_user.author_of?(@question) && @question.destroy
       flash[:notice] = 'Вопрос со всеми ответами успешно удален.'
       redirect_to questions_path
     else
@@ -48,10 +52,18 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
   end
 
   def set_question
     @question = Question.find(params[:question_id])
+  end
+
+  def save_attachments
+    if params[:question][:attachments_attributes].present?
+      params[:question][:attachments_attributes]['0'][:file].each do |a|
+        @question.attachments.create!(file: a)
+      end
+    end
   end
 end

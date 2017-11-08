@@ -10,12 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// require rails-ujs
 //= require turbolinks
 //= require jquery3
-//= require jquery-ujs
+//= require rails-ujs
+// require jquery-ujs
+//= require jquery.remotipart
 //= require popper
 //= require bootstrap-sprockets
+//= require cocoon
 //= require_tree .
 
 var autohide_flash_messages = function(){

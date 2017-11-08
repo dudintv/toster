@@ -7,10 +7,12 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
+    save_attachments
   end
 
   def update
     if current_user.author_of?(@answer) && @answer.update(answer_params)
+      save_attachments
       flash.now[:notice] = 'Ваш ответ обновлен.'
     else
       flash[:alert] = 'Чтобы обновить ваш ответ надо войти в систему.'
@@ -38,7 +40,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
   end
 
   def set_question
@@ -47,5 +49,13 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def save_attachments
+    if params[:answer][:attachments_attributes].present?
+      params[:answer][:attachments_attributes]['0'][:file].each do |a|
+        @answer.attachments.create!(file: a)
+      end
+    end
   end
 end

@@ -1,0 +1,12 @@
+-if attachable.attachments.present?
+  .attachments
+    h6 Прикрепленные файлы
+    ul.list-group
+      - attachable.attachments.each do |attach|
+        li.list-group-item(id="attachment-#{attach.id}")
+          - if current_user&.author_of?(attachable)
+            .float-right
+              = link_to attachment_path(attach), method: :delete, remote: true do
+                = fa_icon 'trash', text: 'Удалить файл'
+          = link_to attach.file.url do
+            = fa_icon 'file', text: attach.file.file.filename

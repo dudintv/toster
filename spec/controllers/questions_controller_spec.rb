@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let!(:user) { create(:user) }
   let(:question) { create(:question) }
+  let(:file1) { Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb") }
+  let(:file2) { Rack::Test::UploadedFile.new("#{Rails.root}/README.md") }
+  let(:file3) { Rack::Test::UploadedFile.new("#{Rails.root}/config.ru") }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -47,10 +50,15 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      let(:create_question) { post :create, params: { question: attributes_for(:question) } }
+      let(:create_question) { post :create, params: { question: attributes_for(:question, attachments_attributes: { '0': { file: [file1, file2] } }) } }
 
       it 'saves the new question' do
         expect { create_question }.to change(Question, :count).by(1)
+      end
+
+      it 'saves with attached files' do
+        create_question
+        expect(assigns(:question).attachments.count).to eq 2
       end
 
       it 'redirect to show view' do
@@ -86,13 +94,20 @@ RSpec.describe QuestionsController, type: :controller do
 
       context 'As author' do
         let!(:my_question) { create(:question, user: user) }
-        let(:update_my_question_valid) { post :update, params: { id: my_question.id, question: { title: 'edited title', body: 'edited body' }, format: :js } }
+        let(:update_my_question_valid) do
+          post :update, params: { id: my_question.id, question: { title: 'edited title', body: 'edited body', attachments_attributes: { '0': { file: [file3] } } }, format: :js }
+        end
         let(:update_my_question_invalid) { post :update, params: { id: my_question.id, question: { title: '', body: '' }, format: :js } }
 
         it 'update my question with valid inputs' do
           update_my_question_valid
           expect(assigns(:question).title).to eq 'edited title'
           expect(assigns(:question).body).to eq 'edited body'
+        end
+
+        it 'saves with additional attached files' do
+          update_my_question_valid
+          expect(assigns(:question).attachments.count).to eq 1
         end
 
         it 'not update my question with invalid inputs' do
@@ -123,7 +138,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect { update_question }.to_not change(question, :updated_at)
       end
 
-      it 'redirect to login page' do
+      it '401 status' do
         update_question
         expect(response.status).to eq 401
       end

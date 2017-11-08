@@ -16,6 +16,10 @@
               = link_to question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
                 = fa_icon 'trash', text: 'Удалить ответ'
         p.card-text= answer.body
+
+        / ФАЙЛЫ
+        = render 'attachments/attachments', attachable: answer
+
       .edit-answer-form.d-none
         h1 Редактирование ответа
         = render 'answers/form', answer: answer

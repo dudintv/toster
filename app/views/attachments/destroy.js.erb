@@ -1,0 +1,6 @@
+<% if @attachment.destroyed? %>
+  set_notice("<%= flash[:notice] %>");
+  $('#attachment-<%= @attachment.id %>').closest('.attachments').html('<%= j render 'attachments/attachments', attachable: @attachment.attachable %>');
+<% else %>
+  set_alert("<%= flash[:alert] %>");
+<% end %>

@@ -6,10 +6,12 @@ ru:
       question: Вопрос
     attributes:
       answer:
-        body: "Ответ"
+        body: Ответ
       question:
-        title: "Вопрос"
-        body: "Подробности вопроса"
+        title: Вопрос
+        body: Подробности вопроса
+      attribute:
+        file: Файл
 
     errors:
       messages:
