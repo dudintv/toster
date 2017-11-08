@@ -16,12 +16,12 @@ feature 'Attach files to Answer', '
     visit question_path(question)
 
     fill_in 'Ответ', with: 'Мой ответ с файлом'
-    attach_file 'answer[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
+    attach_file 'answer[attachments_attributes][0][file]', "#{Rails.root}/README.md"
     click_on 'Создать Ответ'
 
     # очищается поле ввода файлов
     eventually do
-      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file][]').value).to eq ''
+      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file]').value).to eq ''
     end
 
     within('#answers') do
@@ -33,13 +33,19 @@ feature 'Attach files to Answer', '
     sign_in(user)
     visit question_path(question)
 
-    fill_in 'Ответ', with: 'Мой ответ с файлом'
-    attach_file 'answer[attachments_attributes][0][file][]', ["#{Rails.root}/README.md", "#{Rails.root}/config.ru"]
-    click_on 'Создать Ответ'
+    within('#new-answer-form') do
+      fill_in 'Ответ', with: 'Мой ответ с файлом'
+      attach_file 'answer[attachments_attributes][0][file]', "#{Rails.root}/README.md"
+      click_on 'Добавить файл'
+      within('.nested-fields:last-child') do
+        find('input[type="file"]').set "#{Rails.root}/config.ru"
+      end
+      click_on 'Создать Ответ'
 
-    # очищается поле ввода файлов
-    eventually do
-      expect(page.find('#new-answer-form').find_field('answer[attachments_attributes][0][file][]').value).to eq ''
+      # очищается поле ввода файлов
+      eventually do
+        expect(page.find_field('answer[attachments_attributes][0][file]').value).to eq ''
+      end
     end
 
     within('#answers') do
@@ -54,7 +60,10 @@ feature 'Attach files to Answer', '
 
     within("#answer-#{answer.id}") do
       click_on 'Редактировать ответ'
-      attach_file 'answer[attachments_attributes][0][file][]', "#{Rails.root}/README.md"
+      click_on 'Добавить файл'
+      within('.nested-fields:last-child') do
+        find('input[type="file"]').set "#{Rails.root}/README.md"
+      end
       click_on 'Сохранить Ответ'
 
       # Старый файл остался, и добавился новый
@@ -67,10 +76,10 @@ feature 'Attach files to Answer', '
     sign_in(user)
     visit question_path(question)
 
-    within("#attachment-#{attachment.id}") do
-      click_on 'Удалить файл'
-    end
     within("#answer-#{answer.id}") do
+      click_on 'Редактировать ответ'
+      click_on 'Удалить файл'
+
       expect(page).to have_no_link(attachment.file.filename, href: /\/uploads\/attachment\/file\/\d*\/#{attachment.file.filename}/)
     end
   end

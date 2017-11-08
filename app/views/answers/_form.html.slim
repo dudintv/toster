@@ -7,8 +7,12 @@
         = f.input :body, html_input: { class: 'form-control' }
         
         h6 Прикрепить файлы
-        = f.simple_fields_for :attachments do |a|
-          = render 'attachments/attachment', a: a
+        fieldset.answer-attachments
+          = f.simple_fields_for :attachments do |a|
+            = render 'attachments/attachment_fields', f: a
+        = link_to_add_association f, :attachments, partial: 'attachments/attachment_fields', 'data-association-insertion-node': 'fieldset.answer-attachments', 'data-association-insertion-method': :append do
+          = fa_icon 'plus', text: 'Добавить файл'
+        br
 
         = f.button :submit
     - else

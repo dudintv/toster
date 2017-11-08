@@ -9,7 +9,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:file1) { Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb") }
   let(:file2) { Rack::Test::UploadedFile.new("#{Rails.root}/README.md") }
   let(:file3) { Rack::Test::UploadedFile.new("#{Rails.root}/config.ru") }
-  let(:valid_params) { { answer: attributes_for(:answer, attachments_attributes: { '0': { file: [file1, file2] } }), question_id: question } }
+  let(:valid_params) { { answer: attributes_for(:answer, attachments_attributes: { '0': { file: file1 }, '1': { file: file2 } }), question_id: question } }
   let(:invalid_params) { { answer: attributes_for(:invalid_answer), question_id: question } }
 
   describe 'POST #create' do
@@ -61,7 +61,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'As author' do
         let!(:my_answer) { create(:answer, user: user) }
         let(:update_my_answer_valid) do
-          post :update, params: { question_id: my_answer.question.id, id: my_answer.id, answer: { body: 'edited body', attachments_attributes: { '0': { file: [file3] } } }, format: :js }
+          post :update, params: { question_id: my_answer.question.id, id: my_answer.id, answer: { body: 'edited body', attachments_attributes: { '2': { file: file3 } } }, format: :js }
         end
         let(:update_my_answer_invalid) { post :update, params: { question_id: my_answer.question.id, id: my_answer.id, answer: { body: '' }, format: :js } }
 

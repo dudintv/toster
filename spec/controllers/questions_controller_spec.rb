@@ -50,7 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      let(:create_question) { post :create, params: { question: attributes_for(:question, attachments_attributes: { '0': { file: [file1, file2] } }) } }
+      let(:create_question) { post :create, params: { question: attributes_for(:question, attachments_attributes: { '0': { file: file1 }, '1': { file: file2 } }) } }
 
       it 'saves the new question' do
         expect { create_question }.to change(Question, :count).by(1)
@@ -95,7 +95,7 @@ RSpec.describe QuestionsController, type: :controller do
       context 'As author' do
         let!(:my_question) { create(:question, user: user) }
         let(:update_my_question_valid) do
-          post :update, params: { id: my_question.id, question: { title: 'edited title', body: 'edited body', attachments_attributes: { '0': { file: [file3] } } }, format: :js }
+          post :update, params: { id: my_question.id, question: { title: 'edited title', body: 'edited body', attachments_attributes: { '2': { file: file3 } } }, format: :js }
         end
         let(:update_my_question_invalid) { post :update, params: { id: my_question.id, question: { title: '', body: '' }, format: :js } }
 
