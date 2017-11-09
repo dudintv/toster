@@ -1,9 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_question
   before_action :set_answer, except: [:create]
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
@@ -11,6 +11,7 @@ class AnswersController < ApplicationController
   end
 
   def update
+    @question = @answer.question
     if current_user.author_of?(@answer) && @answer.update(answer_params)
       save_attachments
       flash.now[:notice] = 'Ваш ответ обновлен.'
@@ -41,10 +42,6 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
-  end
-
-  def set_question
-    @question = Question.find(params[:question_id])
   end
 
   def set_answer

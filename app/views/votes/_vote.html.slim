@@ -1,11 +1,11 @@
 .input-group
   .input-group-btn
-    = link_to vote_up_question_path(votable), remote: true, class: 'btn btn-secondary vote-up' do
+    = link_to polymorphic_path(votable, action: :vote_up), remote: true, class: 'btn btn-secondary vote-up' do
       = fa_icon 'thumbs-up'
   = text_field_tag :vote_count, 0, size: 1, style: 'text-align: center;', class: 'form-control'
   .input-group-btn
-    = link_to vote_down_question_path(votable), remote: true, class: 'btn btn-secondary vote-down' do
+    = link_to polymorphic_path(votable, action: :vote_down), remote: true, class: 'btn btn-secondary vote-down' do
       = fa_icon 'thumbs-down'
-    = link_to vote_cancel_question_path(votable), remote: true, class: 'btn btn-secondary vote-down' do
+    = link_to polymorphic_path(votable, action: :vote_cancel), remote: true, class: 'btn btn-secondary vote-down' do
       = fa_icon 'thumbs-up'
       |  отменить голос

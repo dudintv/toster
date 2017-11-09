@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :questions, concerns: :votable do
+  resources :questions, shallow: true, concerns: :votable do
     resources :answers, concerns: :votable do
       post 'set_as_best', on: :member, as: 'best'
     end

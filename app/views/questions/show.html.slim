@@ -8,7 +8,7 @@
   #question-block= render 'question', question: @question
 
   / НОВЫЙ ОТВЕТ
-  #new-answer-form= render 'answers/form', answer: @answer
+  #new-answer-form= render 'answers/form', answer: @answer, path: [@question, @answer]
 
   / ВСЕ ОТВЕТЫ
   #answers
