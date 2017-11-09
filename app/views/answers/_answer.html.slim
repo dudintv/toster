@@ -5,6 +5,7 @@
         = fa_icon 'star', text: 'Лучший ответ'
     .card-body
       .answer
+        .clearfix
         - if user_signed_in?
           .float-right
             - if current_user.author_of?(@question) && !answer.best
@@ -16,6 +17,8 @@
               = link_to question_answer_path(@question, answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
                 = fa_icon 'trash', text: 'Удалить ответ'
         p.card-text= answer.body
+        .float-right
+          = render 'votes/vote', votable: answer
 
         / ФАЙЛЫ
         = render 'attachments/attachments', attachable: answer
