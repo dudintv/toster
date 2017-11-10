@@ -1,8 +1,9 @@
 class Answer < ApplicationRecord
+  include Votable
+
   belongs_to :user
   belongs_to :question
   has_many :attachments, as: :attachable, dependent: :destroy
-  has_many :votes, as: :votable, dependent: :destroy
 
   validates :body, presence: true
 
