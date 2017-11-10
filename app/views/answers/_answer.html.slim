@@ -9,7 +9,7 @@
         - if user_signed_in?
           .float-right
             - if current_user.author_of?(@question) && !answer.best
-              = link_to best_answer_path(@question, answer), method: :post, class: 'card-link', remote: true do
+              = link_to best_answer_path(answer), method: :post, class: 'card-link', remote: true do
                 = fa_icon 'star', text: 'Выбрать ответ как лучший'
             - if current_user.author_of?(answer)
               = link_to '#', class: 'card-link edit-answer-link'
@@ -17,8 +17,9 @@
               = link_to answer_path(answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
                 = fa_icon 'trash', text: 'Удалить ответ'
         p.card-text= answer.body
-        .float-right
-          = render 'votes/vote', votable: answer
+        - unless current_user&.author_of?(answer)
+          .float-right
+            = render 'votes/vote', votable: answer
 
         / ФАЙЛЫ
         = render 'attachments/attachments', attachable: answer

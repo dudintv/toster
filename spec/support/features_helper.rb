@@ -13,4 +13,8 @@ module FeaturesHelper
     fill_in 'Пароль', with: user.password
     click_on 'Войти'
   end
+
+  def sign_out
+    click_on 'Выйти'
+  end
 end

@@ -24,6 +24,9 @@ Layout/EndOfLine:
 Layout/IndentHeredoc:
   EnforcedStyle: powerpack
 
+Layout/TrailingWhitespace:
+  Enabled: false
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*.rb'

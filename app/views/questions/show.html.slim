@@ -4,13 +4,11 @@
     li.breadcrumb-item.active= @question.title.truncate(50)
 .container
 
-  / САМ ВОПРОС
+  / ВОПРОС
   #question-block= render 'question', question: @question
 
-  / НОВЫЙ ОТВЕТ
+  / ФОРМА НОВОГО ОТВЕТА
   #new-answer-form= render 'answers/form', answer: @answer, path: [@question, @answer]
 
   / ВСЕ ОТВЕТЫ
-  #answers
-    - @question.answers.each do |answer|
-      = render 'answers/answer', answer: answer
+  #answers= render @question.answers

@@ -1,11 +1,23 @@
-.input-group
-  .input-group-btn
-    = link_to polymorphic_path(votable, action: :vote_up), remote: true, class: 'btn btn-secondary vote-up' do
-      = fa_icon 'thumbs-up'
-  = text_field_tag :vote_count, 0, size: 1, style: 'text-align: center;', class: 'form-control'
-  .input-group-btn
-    = link_to polymorphic_path(votable, action: :vote_down), remote: true, class: 'btn btn-secondary vote-down' do
-      = fa_icon 'thumbs-down'
-    = link_to polymorphic_path(votable, action: :vote_cancel), remote: true, class: 'btn btn-secondary vote-down' do
-      = fa_icon 'thumbs-up'
-      |  отменить голос
+- is_author_vote = votable.votes.exists?(user: current_user)
+- show_voting_class = is_author_vote ? 'd-none' : ''
+- show_cancel_class = is_author_vote ? '' : 'd-none'
+- is_positive_vote = is_author_vote && (votable.votes.find_by(user: current_user).value == 1)
+- show_cancel_up_class = is_positive_vote ? '' : 'd-none'
+- show_cancel_down_class = is_positive_vote ? 'd-none' : ''
+
+.input-group.voting
+  - if user_signed_in?
+    .input-group-btn.vote-up(class = show_voting_class)
+      = link_to polymorphic_path(votable, action: :vote_up), remote: true, method: :post, class: 'btn btn-secondary' do
+        = fa_icon 'thumbs-up'
+  = text_field_tag :vote_count, votable.sum_value, size: 1, style: 'text-align: center;', class: 'form-control'
+  - if user_signed_in?
+    .input-group-btn
+      = link_to polymorphic_path(votable, action: :vote_down), remote: true, method: :post, class: "btn btn-secondary vote-down #{show_voting_class}" do
+        = fa_icon 'thumbs-down'
+      = link_to polymorphic_path(votable, action: :vote_cancel), remote: true, method: :post, class: "btn btn-secondary vote-cancel #{show_cancel_class}" do
+        | отменить голос 
+        span.cancel-up(class = show_cancel_up_class)
+          = fa_icon 'thumbs-up'
+        span.cancel-down(class = show_cancel_down_class)
+          = fa_icon 'thumbs-down'
