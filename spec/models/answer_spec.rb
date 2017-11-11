@@ -10,6 +10,8 @@ RSpec.describe Answer, type: :model do
 
   it { should have_db_column(:best).of_type(:boolean).with_options(default: false) }
 
+  it_behaves_like 'votable'
+
   describe '#set_as_best' do
     let!(:foreign_question) { create(:question) }
     let!(:foreign_best_answer) { create(:answer, question: foreign_question, best: true) }

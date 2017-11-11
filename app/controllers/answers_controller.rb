@@ -1,9 +1,11 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!
-  before_action :set_question
   before_action :set_answer, except: [:create]
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
@@ -11,6 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def update
+    @question = @answer.question
     if current_user.author_of?(@answer) && @answer.update(answer_params)
       save_attachments
       flash.now[:notice] = 'Ваш ответ обновлен.'
@@ -30,7 +33,8 @@ class AnswersController < ApplicationController
   end
 
   def set_as_best
-    if current_user.author_of?(@answer.question)
+    @question = @answer.question
+    if current_user.author_of?(@question)
       @answer.set_as_best
     else
       flash.now[:alert] = 'Вы не можете устанавливать лучший ответ на чужой вопрос.'
@@ -41,10 +45,6 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
-  end
-
-  def set_question
-    @question = Question.find(params[:question_id])
   end
 
   def set_answer
