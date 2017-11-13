@@ -1,0 +1,22 @@
+#question
+
+  - if current_user&.author_of?(question)
+    .float-right.btn-group
+      = link_to '#', id: 'edit-question-link', class: 'btn btn-secondary bg-light text-warning border-light' do
+        = fa_icon 'edit', text: 'Редактировать вопрос'
+      = link_to question_path(question), method: :delete, data: {confirm: 'Точно удалить?'}, class: 'btn btn-secondary bg-light text-danger border-light' do
+        = fa_icon 'trash', text: 'Удалить вопрос'
+  - else
+    .float-right
+      = render 'votes/vote', votable: @question
+    
+  h1= question.title
+  small.text-muted= "Автор: #{question.user&.email}"
+  p.lead= question.body
+
+- if current_user&.author_of?(question)
+  #edit-question-form.d-none
+    h1 Редактирование вопроса
+    = render 'form', question: question
+
+= render 'attachments/attachments', attachable: @question

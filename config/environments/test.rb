@@ -40,6 +40,8 @@ Rails.application.configure do
   Capybara.server_port = 3333 # or everything you want)
   Capybara.server_host = '0.0.0.0' # to access server running within VM
 
+  # config.action_cable.disable_request_forgery_protection = true
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

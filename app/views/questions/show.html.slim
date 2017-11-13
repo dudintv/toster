@@ -5,7 +5,7 @@
 .container
 
   / ВОПРОС
-  #question-block= render 'question', question: @question
+  #question-block= render 'question_full', question: @question
 
   / ФОРМА НОВОГО ОТВЕТА
   #new-answer-form= render 'answers/form', answer: @answer, path: [@question, @answer]
