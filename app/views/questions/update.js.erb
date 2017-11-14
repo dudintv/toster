@@ -6,6 +6,6 @@ $('#question-errors').html('');
     set_alert("<%= flash[:alert] %>");
   <% end %>
 <% else %>
-  $('#question-block').html("<%= j render @question %>");
+  $('#question-block').html("<%= j render 'questions/question_full', question: @question %>");
   set_notice("<%= flash[:notice] %>");
 <% end %>

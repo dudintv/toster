@@ -10,4 +10,4 @@
               a href= Routes.attachment_path(attach) data-method= 'delete' data-remote= true
                 == App.utils.fa('trash', 'Удалить файл')
           a href= attach['file']['url']
-            == App.utils.fa('file', attach['file']['url'])
+            == App.utils.fa('file', attach['file']['url'].split('/').pop())

@@ -8,7 +8,7 @@
         = fa_icon 'trash', text: 'Удалить вопрос'
   - else
     .float-right
-      = render 'votes/vote', votable: @question
+      = render 'votes/vote', votable: question
     
   h1= question.title
   small.text-muted= "Автор: #{question.user&.email}"
@@ -19,4 +19,4 @@
     h1 Редактирование вопроса
     = render 'form', question: question
 
-= render 'attachments/attachments', attachable: @question
+= render 'attachments/attachments', attachable: question

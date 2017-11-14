@@ -10,5 +10,8 @@ App.answers = App.cable.subscriptions.create "AnswersChannel",
   received: (data) ->
     return if $("#answer-#{data['id']}")[0] != undefined
     $("#answers").append App.utils.render('answer', data)
+    $('#answer_body').val('');
+    $('#answer_attachments_attributes_0_file').val('');
+    $('#form-answer-errors').empty();
 
 $(document).on 'turbolinks:load', -> App.answers.connected()

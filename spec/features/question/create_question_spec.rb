@@ -39,7 +39,7 @@ feature 'Create question', '
   end
 
   context 'multiple sessions' do
-    scenario 'new question appear on another page', js: true do
+    scenario 'new question appear on another browser tab', js: true do
       Capybara.using_session('user') do
         sign_in user
         visit questions_path
