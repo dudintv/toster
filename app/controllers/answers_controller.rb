@@ -54,14 +54,9 @@ class AnswersController < ApplicationController
 
   def save_attachments
     if params[:answer][:attachments_attributes].present?
-      puts '-------'
-      puts params[:answer][:attachments_attributes].inspect
-      puts '_______'
       params[:answer][:attachments_attributes]['0'][:file].each do |a|
-        puts a.inspect
         @answer.attachments.create!(file: a)
       end
-      puts 'xxxxxxx'
     end
   end
 

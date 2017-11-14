@@ -65,7 +65,6 @@ class QuestionsController < ApplicationController
   end
 
   def save_attachments
-    puts params[:question].inspect
     if params[:question][:attachments_attributes].present?
       params[:question][:attachments_attributes]['0'][:file]&.each do |a|
         @question.attachments.create!(file: a)
