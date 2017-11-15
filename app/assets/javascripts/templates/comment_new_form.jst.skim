@@ -1,0 +1,14 @@
+.card.comments-block
+  .list-group.list-group-flush.comments
+  - if gon.user_signed_in
+    a.add-comment.btn.btn-light.btn-sm href='#' добавить комментарий
+    .card-footer.new-comment-form.d-none
+      form.simple_form.new_comment novalidate="novalidate" id="new_comment" action="/questions/21/comments" accept-charset="UTF-8" data-remote="true" method="post"
+        input name="utf8" type="hidden" value="✓"
+        .form-comment-errors
+        .form-group.text.required.comment_body
+          label.control-label.text.required for="comment_body" Комментарий
+          textarea.form-control.text.required name="comment[body]" id="comment_body"
+        input.form-control.hidden type="hidden" value=@commentable_type name="comment[commentable_type]" id="comment_commentable_type"
+        input.form-control.hidden type="hidden" value=@commentable_id name="comment[commentable_id]" id="comment_commentable_id"
+        input type="submit" name="commit" value="Создать Комментарий" data-disable-with="Создать Комментарий"

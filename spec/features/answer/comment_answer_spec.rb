@@ -33,4 +33,32 @@ feature 'Comment answer', '
       expect(page).to_not have_link 'добавить комментарий'
     end
   end
+
+  context 'multiple sessions' do
+    scenario 'new comment appear on another browser tab', js: true do
+      Capybara.using_session('user') do
+        sign_in user
+        visit question_path(question)
+      end
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+      Capybara.using_session('user') do
+        within("#answer-#{answer.id}") do
+          click_on 'добавить комментарий'
+          fill_in 'Комментарий', with: 'мой комментарий'
+          click_on 'Создать Комментарий'
+
+          within('.comments') do
+            expect(page).to have_content 'мой комментарий'
+          end
+        end
+      end
+      Capybara.using_session('guest') do
+        within("#answer-#{answer.id} .comments") do
+          expect(page).to have_content 'мой комментарий'
+        end
+      end
+    end
+  end
 end

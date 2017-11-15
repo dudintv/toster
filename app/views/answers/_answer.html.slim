@@ -34,4 +34,5 @@
       .float-right
         = answer.user&.email
     
+    / КОММЕНТАРИИ
     = render 'comments/comments', commentable: answer, comment: Comment.new(commentable: answer)

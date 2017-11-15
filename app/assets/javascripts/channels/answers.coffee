@@ -1,7 +1,6 @@
 App.answers = App.cable.subscriptions.create "AnswersChannel",
   connected: ->
     return unless gon.question_id
-    console.log 'follow for answer of question_id = '+gon.question_id
     @perform 'follow', question_id: gon.question_id
 
   disconnected: ->

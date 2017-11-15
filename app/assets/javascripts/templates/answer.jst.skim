@@ -1,4 +1,3 @@
-- console.log @
 - best_class = if @best then " border-success" else ""
 div id= "answer-#{@id}" class= "card answer-block#{best_class}"
   - if @best
@@ -36,3 +35,6 @@ div id= "answer-#{@id}" class= "card answer-block#{best_class}"
     small= "#{@created_at} / #{@updated_at}"
     .float-right
       = @user.email
+
+  / КОММЕНТАРИИ
+  == App.utils.render('comment_new_form', commentable_type: 'Answer', commentable_id: @id)
