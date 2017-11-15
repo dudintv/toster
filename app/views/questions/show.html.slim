@@ -2,11 +2,12 @@
   ol.breadcrumb
     li.breadcrumb-item= link_to 'Все вопросы', questions_path
     li.breadcrumb-item.active= @question.title.truncate(50)
-.container
 
+.container
   / ВОПРОС
   #question-block= render 'question_full', question: @question
 
+  h4 Ответы:
   / ФОРМА НОВОГО ОТВЕТА
   #new-answer-form= render 'answers/form', answer: @answer, path: [@question, @answer]
 

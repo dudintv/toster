@@ -4,6 +4,7 @@ ru:
     models:
       answer: Ответ
       question: Вопрос
+      comment: Комментарий
     attributes:
       answer:
         body: Ответ
@@ -12,6 +13,8 @@ ru:
         body: Подробности вопроса
       attribute:
         file: Файл
+      comment:
+        body: Комментарий
 
     errors:
       messages:

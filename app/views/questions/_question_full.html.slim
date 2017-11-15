@@ -20,3 +20,5 @@
     = render 'form', question: question
 
 = render 'attachments/attachments', attachable: question
+
+= render 'comments/comments', commentable: question, comment: Comment.new(commentable: question)

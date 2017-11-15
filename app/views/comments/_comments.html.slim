@@ -1,0 +1,13 @@
+.card.comments
+  - if commentable.comments.present?
+    .card-header Комментарии
+    .list-group.list-group-flush
+      - commentable.comments.each do |comment|
+      = render comment
+  = link_to 'добавить комментарий', '#', class: 'add-comment btn btn-light btn-sm'
+  .card-footer.add-comment-form.d-none
+    = simple_form_for [commentable, comment] do |f|
+      = f.input :body
+      = f.input :commentable_type, as: :hidden
+      = f.input :commentable_id, as: :hidden
+      = f.submit

@@ -33,3 +33,5 @@
       small= "#{answer.created_at} / #{answer.updated_at}"
       .float-right
         = answer.user&.email
+    
+    = render 'comments/comments', commentable: answer, comment: Comment.new(commentable: answer)

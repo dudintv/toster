@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'questions#index'
-  
+
   devise_for :users
 
   concern :votable do
@@ -11,8 +11,12 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :questions, shallow: true, concerns: :votable do
-    resources :answers, concerns: :votable do
+  concern :commentable do
+    resources :comments, only: [:create, :destroy]
+  end
+  
+  resources :questions, shallow: true, concerns: [:votable, :commentable] do
+    resources :answers, concerns: [:votable, :commentable] do
       post 'set_as_best', on: :member, as: 'best'
     end
   end
