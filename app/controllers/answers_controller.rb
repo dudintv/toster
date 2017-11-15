@@ -59,17 +59,7 @@ class AnswersController < ApplicationController
       end
     end
   end
-
-  # -------
-  # <ActionController::Parameters {"0"=>{"file"=>["C:\\fakepath\\2017-03-26_23-48-57.png"]}} permitted: false>
-  # "C:\\fakepath\\2017-03-26_23-48-57.png"
-
-  # -------
-  # <ActionController::Parameters {"0"=>{"file"=>[#<ActionDispatch::Http::UploadedFile:0x007fcaf04c7d28 @tempfile=#<Tempfile:/var/folders/zh/xr6fw9jx5k179gmrqgf9nj380000gn/T/RackMultipart20171114-99099-d4asvj.png>, @original_filename="2017-03-26_23-41-12.png", @content_type="image/png", @headers="Content-Disposition: form-data; name=\"answer[attachments_attributes][0][file][]\"; filename=\"2017-03-26_23-41-12.png\"\r\nContent-Type: image/png\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fcaf04c7c60 @tempfile=#<Tempfile:/var/folders/zh/xr6fw9jx5k179gmrqgf9nj380000gn/T/RackMultipart20171114-99099-103m1e5.png>, @original_filename="2017-03-26_23-48-25.png", @content_type="image/png", @headers="Content-Disposition: form-data; name=\"answer[attachments_attributes][0][file][]\"; filename=\"2017-03-26_23-48-25.png\"\r\nContent-Type: image/png\r\n">], "id"=>"28"}} permitted: false>
-  # _______
-  #<ActionDispatch::Http::UploadedFile:0x007fcaf04c7d28 @tempfile=#<Tempfile:/var/folders/zh/xr6fw9jx5k179gmrqgf9nj380000gn/T/RackMultipart20171114-99099-d4asvj.png>, @original_filename="2017-03-26_23-41-12.png", @content_type="image/png", @headers="Content-Disposition: form-data; name=\"answer[attachments_attributes][0][file][]\"; filename=\"2017-03-26_23-41-12.png\"\r\nContent-Type: image/png\r\n">
-
-
+  
   def publish_answer
     return if @answer.errors.any?
     ActionCable.server.broadcast(
