@@ -3,14 +3,15 @@
     $('#new-answer-form').find('.form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  <% if remotipart_submitted? %>
-    $('#answers').append('<%= j "#{render @answer}" %>');
-  <% else %>
-    $('#answers').append('<%= j render @answer %>');
-  <% end %>
-  
-  $('#answer_body').val('');
-  console.log('answer_attachments_attributes_0_file');
-  $('#answer_attachments_attributes_0_file').val('');
-  $('#form-answer-errors').empty();
+  if ( $("#answer-<%= @answer.id %>")[0] === undefined) ) {
+    <% if remotipart_submitted? %>
+      $('#answers').append('<%= j "#{render @answer}" %>');
+    <% else %>
+      $('#answers').append('<%= j render @answer %>');
+    <% end %>
+    
+    $('#answer_body').val('');
+    $('#answer_attachments_attributes_0_file').val('');
+    $('#form-answer-errors').empty();
+  }
 <% end %>

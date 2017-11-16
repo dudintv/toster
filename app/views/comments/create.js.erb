@@ -1,0 +1,21 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message|%>
+    $('#new-comment-form').find('.form-comment-errors').append('<p class="alert alert-danger"><%= j message %></p>');
+  <% end %>
+<% else %>
+  if ( $("#comment-<%= @comment.id %>")[0] === undefined ) {
+    var comments;
+    switch("<%= @comment.commentable_type %>"){
+      case "Answer":
+        comments = $("#answer-<%= @comment.commentable_id %> .comments");
+        break;
+      case "Question":
+        comments = $("#question-block .comments");
+        break;
+    }
+
+    console.log("<%= @comment.commentable_type %>");
+
+    comments.append('<%= j render @comment %>');
+  }
+<% end %>

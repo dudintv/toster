@@ -1,0 +1,13 @@
+- console.log @attachable['attachments']
+- if @attachable['attachments'].length > 0
+  .attachments
+    h6 Прикрепленные файлы
+    ul.list-group
+      - for attach in @attachable['attachments']
+        li.list-group-item id="attachment-#{attach['id']}"
+          - if gon.current_user_id == @attachable['user_id']
+            .float-right
+              a href= Routes.attachment_path(attach) data-method= 'delete' data-remote= true
+                == App.utils.fa('trash', 'Удалить файл')
+          a href= attach['file']['url']
+            == App.utils.fa('file', attach['file']['url'].split('/').pop())

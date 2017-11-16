@@ -1,0 +1,40 @@
+- best_class = if @best then " border-success" else ""
+div id= "answer-#{@id}" class= "card answer-block#{best_class}"
+  - if @best
+    .card-header.text-white.bg-success
+      = fa_icon 'star', text: 'Лучший ответ'
+
+  .card-body
+    .answer
+      .clearfix
+      - if gon.user_signed_in?
+        .float-right
+          - if gon.current_user_id == gon.question_user_id
+            a.card-link href= Routes.best_answer_path(@) data-method= 'post' data-remote= 'true'
+              == App.utils.fa('star', 'Выбрать ответ как лучший')
+          - if gon.current_user_id == @user_id
+            a.card-link.edit-answer-link href=''
+              == App.utils.fa('edit', 'Редактировать ответ')
+            a.card-link href= Routes.answer_path(@) data-remote= true data-method= 'delete' data-confirm= 'Точно удалить?'
+              == App.utils.fa('trash', 'Удалить ответ')
+
+      p.card-text= @body
+
+      / ГОЛОСОВАНИЕ
+      .float-right
+        == App.utils.render('vote', klass: 'answers', votable: @)
+
+      / ФАЙЛЫ
+      == App.utils.render('attachments', attachable: @)
+
+    .edit-answer-form.d-none
+      h1 Редактирование ответа
+      == App.utils.render('answer_edit_form', answer: @)
+
+  .card-footer.text-muted
+    small= "#{@created_at} / #{@updated_at}"
+    .float-right
+      = @user.email
+
+  / КОММЕНТАРИИ
+  == App.utils.render('comment_new_form', commentable_type: 'Answer', commentable_id: @id)

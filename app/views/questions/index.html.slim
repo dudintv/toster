@@ -1,9 +1,6 @@
 .container
   br
   = link_to 'Новый вопрос', new_question_path, class: 'btn btn-primary float-right'
+
   h1 Все вопросы
-  - @questions.each do |question|
-    .card
-      .card-body
-        h4.card-title= link_to question.title, question_path(question)
-        p.card-text= question.body.truncate(300)
+  #questions= render @questions

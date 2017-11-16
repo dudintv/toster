@@ -63,8 +63,11 @@ gem 'rails-i18n', '~> 5.0.0'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'cocoon'
 gem 'font-awesome-rails'
+gem 'gon'
 gem 'jquery-rails'
+gem 'js-routes'
 gem 'simple_form'
+gem 'skim'
 gem 'slim-rails'
 
 # Изображения

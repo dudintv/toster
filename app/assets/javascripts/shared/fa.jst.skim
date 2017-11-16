@@ -1,0 +1,2 @@
+i class = "fa fa-#{@icon}"
+= " #{@text}" if @text

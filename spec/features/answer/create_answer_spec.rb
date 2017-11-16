@@ -34,4 +34,28 @@ feature 'Create answer', '
 
     expect(page).to have_content 'Ответ не может быть пустым'
   end
+
+  context 'multiple sessions' do
+    scenario 'new answer appear on another browser tab', js: true do
+      Capybara.using_session('user') do
+        sign_in user
+        visit question_path(question)
+      end
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+      Capybara.using_session('user') do
+        fill_in 'Ответ', with: 'Мой ответ'
+        click_on 'Создать Ответ'
+        within '#answers' do
+          expect(page).to have_content 'Мой ответ'
+        end
+      end
+      Capybara.using_session('guest') do
+        within '#answers' do
+          expect(page).to have_content 'Мой ответ'
+        end
+      end
+    end
+  end
 end

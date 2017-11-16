@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_answer, except: [:create]
+  after_action :publish_answer, only: [:create]
 
   def create
     @question = Question.find(params[:question_id])
@@ -57,5 +58,13 @@ class AnswersController < ApplicationController
         @answer.attachments.create!(file: a)
       end
     end
+  end
+  
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      "questions/#{@question.id}/answers",
+      @answer.to_json(include: [:attachments, :user])
+    )
   end
 end

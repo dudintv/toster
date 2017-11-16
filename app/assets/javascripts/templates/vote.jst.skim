@@ -1,0 +1,18 @@
+.input-group.voting
+  - if gon.user_signed_in && gon.current_user_id != @votable['user_id']
+    .input-group-btn.vote-up
+      a.btn.btn-secondary href= "/#{@klass}/#{@votable['id']}/vote_up" data-remote= true data-method= 'post'
+        == App.utils.fa('thumbs-up')
+  
+  input.form-control type= 'text' value= '0' size= 2 style= 'text-align: center'
+  - if gon.user_signed_in && gon.current_user_id != @votable['user_id']
+    .input-group-btn
+      a.btn.btn-secondary href= "/#{@klass}/#{@votable['id']}/vote_down" data-remote= true data-method= 'post'
+        == App.utils.fa('thumbs-down')
+
+      a.btn.btn-secondary.d-none href= "/#{@klass}/#{@votable['id']}/vote_cancel" data-remote= true data-method= 'post'
+        | отменить голос 
+        span.cancel-up
+          == App.utils.fa('thumbs-up')
+        span.cancel-down
+          == App.utils.fa('thumbs-down')

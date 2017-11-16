@@ -1,7 +1,7 @@
 .card
   .card-body
     - if user_signed_in?
-      = simple_form_for path, authenticity_token: true, remote: true do |f|
+      = simple_form_for path, remote: true do |f|
         .form-answer-errors
         = f.error_notification
         = f.input :body, html_input: { class: 'form-control' }

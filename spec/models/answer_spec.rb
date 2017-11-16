@@ -11,6 +11,7 @@ RSpec.describe Answer, type: :model do
   it { should have_db_column(:best).of_type(:boolean).with_options(default: false) }
 
   it_behaves_like 'votable'
+  it_behaves_like 'commentable'
 
   describe '#set_as_best' do
     let!(:foreign_question) { create(:question) }

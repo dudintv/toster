@@ -1,0 +1,15 @@
+.card.comments-block
+  - if commentable.comments.present?
+    .card-header Комментарии
+  .list-group.list-group-flush.comments
+    - commentable.comments.each do |comment|
+      = render comment
+  - if user_signed_in?
+    = link_to 'добавить комментарий', '#', class: 'add-comment btn btn-light btn-sm'
+    .card-footer.new-comment-form.d-none
+      = simple_form_for [commentable, comment], remote: true do |f|
+        .form-comment-errors
+        = f.input :body
+        = f.input :commentable_type, as: :hidden
+        = f.input :commentable_id, as: :hidden
+        = f.submit

@@ -17,9 +17,10 @@
               = link_to answer_path(answer), method: :delete, class: 'card-link', data: {confirm: 'Точно удалить?'}, remote: true
                 = fa_icon 'trash', text: 'Удалить ответ'
         p.card-text= answer.body
-        - unless current_user&.author_of?(answer)
-          .float-right
-            = render 'votes/vote', votable: answer
+
+        / ГОЛОСОВАНИЕ
+        .float-right
+          = render 'votes/vote', votable: answer
 
         / ФАЙЛЫ
         = render 'attachments/attachments', attachable: answer
@@ -32,3 +33,6 @@
       small= "#{answer.created_at} / #{answer.updated_at}"
       .float-right
         = answer.user&.email
+    
+    / КОММЕНТАРИИ
+    = render 'comments/comments', commentable: answer, comment: Comment.new(commentable: answer)

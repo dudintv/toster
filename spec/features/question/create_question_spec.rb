@@ -37,4 +37,26 @@ feature 'Create question', '
     expect(page).to have_content 'Вопросне может быть пустым'
     expect(page).to have_content 'Подробности не может быть пустым'
   end
+
+  context 'multiple sessions' do
+    scenario 'new question appear on another browser tab', js: true do
+      Capybara.using_session('user') do
+        sign_in user
+        visit questions_path
+      end
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+      Capybara.using_session('user') do
+        click_on 'Новый вопрос'
+        fill_in 'Вопрос', with: 'Сам вопрос'
+        fill_in 'Подробности', with: 'Подробности'
+        click_on 'Создать Вопрос'
+        expect(page).to have_content 'Сам вопрос'
+      end
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Сам вопрос'
+      end
+    end
+  end
 end
