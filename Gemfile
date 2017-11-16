@@ -53,6 +53,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # ##########################
 
+# Рефакторинг
+gem 'responders'
+
 # Качество кода
 gem 'rubocop', require: false
 
