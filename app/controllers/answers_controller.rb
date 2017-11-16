@@ -3,43 +3,29 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_answer, except: [:create]
+  before_action :set_question, except: [:create]
   after_action :publish_answer, only: [:create]
+
+  respond_to :js, only: [:create, :update, :destroy, :set_as_best]
 
   def create
     @question = Question.find(params[:question_id])
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answer.save
+    @answer = @question.answers.create(answer_params.merge(user: current_user))
     save_attachments
+    respond_with @answer
   end
 
   def update
-    @question = @answer.question
-    if current_user.author_of?(@answer) && @answer.update(answer_params)
-      save_attachments
-      flash.now[:notice] = 'Ваш ответ обновлен.'
-    else
-      flash[:alert] = 'Чтобы обновить ваш ответ надо войти в систему.'
-      redirect_to new_user_session_path unless user_signed_in?
-    end
+    save_attachments
+    respond_with(@answer.update(answer_params)) if current_user.author_of?(@answer)
   end
 
   def destroy
-    if current_user.author_of?(@answer) && @answer.delete
-      flash.now[:notice] = 'Ваш ответ удален.'
-    else
-      flash[:alert] = 'Чтобы удалить ваш ответ надо войти в систему.'
-      redirect_to new_user_session_path unless user_signed_in?
-    end
+    respond_with(@answer.delete) if current_user.author_of?(@answer)
   end
 
   def set_as_best
-    @question = @answer.question
-    if current_user.author_of?(@question)
-      @answer.set_as_best
-    else
-      flash.now[:alert] = 'Вы не можете устанавливать лучший ответ на чужой вопрос.'
-    end
+    respond_with(@answer.set_as_best) if current_user.author_of?(@question)
   end
 
   private
@@ -50,6 +36,10 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def set_question
+    @question = @answer.question
   end
 
   def save_attachments
