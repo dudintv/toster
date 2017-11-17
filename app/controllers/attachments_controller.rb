@@ -1,14 +1,10 @@
 class AttachmentsController < ApplicationController
   before_action :authenticate_user!
 
+  respond_to :js
+
   def destroy
     @attachment = Attachment.find(params[:id])
-
-    if current_user.author_of?(@attachment.attachable)
-      @attachment.destroy
-      flash.now[:notice] = 'Ваш файл удален'
-    else
-      flash.now[:notice] = 'Нельзя удалить чужой файл'
-    end
+    respond_with(@attachment.destroy) if current_user.author_of?(@attachment.attachable)
   end
 end

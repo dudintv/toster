@@ -2,23 +2,12 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_comment
 
+  respond_to :js
+
   def create
     @comment = Comment.new(comment_params.merge(user: current_user))
-    if @comment.save
-      flash[:notice] = 'Комментарий добавлен'
-    else
-      head :unprocessable_entity
-    end
+    respond_with(@comment.save)
   end
-
-  # def destroy
-  #   @comment = Comment.find(params[:id])
-  #   if current_user.author_of?(@comment)
-  #     @comment.destroy
-  #   else
-  #     head :forbidden
-  #   end
-  # end
 
   private
 
