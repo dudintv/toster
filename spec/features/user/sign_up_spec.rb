@@ -13,7 +13,7 @@ feature 'User sign up', '
   scenario 'User sign up' do
     sign_up(user)
 
-    expect(page).to have_content 'Добро пожаловать! Вы зарегистрировались.'
+    expect(page).to have_content 'Добро пожаловать! Вы успешно зарегистрировались.'
     expect(current_path).to eq root_path
   end
 
