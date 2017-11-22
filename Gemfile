@@ -80,6 +80,9 @@ gem 'remotipart', '~> 1.3'
 # Авторизация
 gem 'devise'
 gem 'devise-i18n'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-vkontakte'
 
 # Тестирование
 group :development, :test do
@@ -91,8 +94,10 @@ group :development, :test do
 end
 group :test do
   gem 'capybara'
+  gem 'capybara-email'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'letter_opener'
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 3.1'
 end
