@@ -91,7 +91,7 @@ ru:
         didn_t_receive_unlock_instructions: "Не получили код разблокировки?"
         forgot_your_password: "Забыли пароль?"
         sign_in: "Войти"
-        sign_in_with_provider: "Войти с помощью: %{provider}"
+        sign_in_with_provider: "Войти с помощью %{provider}"
         sign_up: "Регистрация"
     unlocks:
       new:

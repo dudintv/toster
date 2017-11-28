@@ -5,12 +5,33 @@ feature 'User sign in with Social Network tokens', '
   As an guest
   I want to be able to sign in without standart authentifacation with email
 ' do
-  let(:user) { create(:user) }
+  given(:user) { create(:user) }
 
-  describe 'User sign in with Facebook' do
-    scenario 'New user try sign in by Facebook first time' do
+  describe 'Sign in with Facebook' do
+    given(:auth) { OmniAuth.config.mock_auth[:facebook] }
+
+    scenario 'New user try sign in with Facebook first time' do
       visit new_user_session_path
-      expect(page).to have_link 'Войти с помощью: Facebook'
+      click_on 'Войти с помощью Facebook'
+      expect(page).to have_content 'Вход в систему выполнен с учетной записью из Facebook.'
+      expect(page).to have_content auth.info.email
+    end
+
+    scenario 'Existing user try sign in with Facebook first time' do
+      user.update!(email: auth.info.email)
+      visit new_user_session_path
+      click_on 'Войти с помощью Facebook'
+
+      expect(page).to have_content 'На почту ушло подтверждение'
+    end
+
+    scenario 'Existing and authorized user try sign in with Facebook second time' do
+      user.update!(email: auth.info.email)
+      create(:authorization, user: user, provider: auth.provider, uid: auth.uid)
+      visit new_user_session_path
+      click_on 'Войти с помощью Facebook'
+      expect(page).to have_content 'Вход в систему выполнен с учетной записью из Facebook.'
+      expect(page).to have_content user.email
     end
   end
 end
