@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  get 'authorizations/:id/confirm', to: 'authorizations#confirm', as: 'confirm_authorization'
 
   concern :votable do
     member do

@@ -1,0 +1,3 @@
+AuthorizationMailer#confirmation
+
+Hi, find me in app/views/authorization_mailer/confirmation

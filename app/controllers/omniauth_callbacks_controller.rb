@@ -1,18 +1,36 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
-    # render json: request.env["omniauth.auth"]
-    @user = User.from_omniauth(request.env['omniauth.auth'])
+    @auth = request.env['omniauth.auth']
+    @authorization = Authorization.where(provider: @auth.provider, uid: @auth.uid.to_s).first
 
-    if @user.persisted?
-      sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
+    if @authorization
+      if @authorization.confirmed_at.present?
+        success_sign_in(@authorization.user, @authorization.provider)
+      else
+        render 'authorization/unconfirmed'
+      end
     else
-      session['devise.facebook_data'] = request.env['omniauth.auth']
-      redirect_to new_user_registration_url
+      create_authorization
     end
   end
 
   def failure
     redirect_to root_path
+  end
+
+  private
+
+  def create_authorization
+    if @auth.info[:email]
+      @user = User.from_omniauth(@auth)
+      if @user&.persisted?
+        success_sign_in(@user, @auth.provider)
+      else
+        session['devise.omniauth_data'] = request.env['omniauth.auth']
+        redirect_to new_user_registration_url
+      end
+    else
+      render 'authorization/new'
+    end
   end
 end
