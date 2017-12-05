@@ -1,4 +1,4 @@
-h1= "Подтверждение входа через #{@auth.provider}"
+h1= "Подтверждение вход на сайт через #{@auth.provider}"
 p
-  | Чтобы подтвердить что это вход от вашего имени перейдите по ссылке: 
-  = link_to 'ПОДТВЕРДИТЬ', confirm_authorization_url
+  | Чтобы подтвердить что это вход от вашего имени — перейдите по ссылке: 
+  = link_to confirm_authorization_url(@auth), confirm_authorization_url(@auth.id, token: @auth.confirmation_token)
