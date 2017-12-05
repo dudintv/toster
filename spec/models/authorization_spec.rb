@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Authorization, type: :model do
   it { should belong_to(:user) }
 
-  describe '#after_create' do
+  describe 'callback :after_create' do
     let(:authorization) { create(:authorization) }
 
     it 'confirmation_token is set after create' do

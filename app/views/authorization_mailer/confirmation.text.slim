@@ -1,4 +1,4 @@
 = "Подтверждение входа через #{@auth.provider}"
 = "\r\n" * 2
 Чтобы подтвердить что это вход от вашего имени перейдите по ссылке: 
-= confirm_authorization_url(@auth)
+= link_to 'Подтвердить мой аккаунт', confirm_authorization_url(@auth.id, token: @auth.confirmation_token)

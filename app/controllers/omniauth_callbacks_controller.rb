@@ -28,7 +28,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def create_new_authorization
-    if @auth.info[:email]
+    # pry
+    if @auth.info && @auth.info[:email]
       @user = User.from_omniauth(@auth)
       if @user&.persisted?
         success_sign_in(@user, @auth.provider)

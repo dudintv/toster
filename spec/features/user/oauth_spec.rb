@@ -15,7 +15,7 @@ feature 'User sign in with Social Network tokens', '
       visit new_user_session_path
       click_on 'Войти с помощью Facebook'
       
-      expect(page).to have_content 'Вход в систему выполнен с учетной записью из facebook.'
+      expect(page).to have_content 'Успешно вошли на сайт через facebook'
       expect(page).to have_content auth.info.email
     end
 
@@ -23,7 +23,7 @@ feature 'User sign in with Social Network tokens', '
       visit new_user_session_path
       click_on 'Войти с помощью Facebook'
 
-      expect(page).to have_content 'Вход в систему выполнен с учетной записью из facebook.'
+      expect(page).to have_content 'Успешно вошли на сайт через facebook'
     end
 
     scenario 'Existing and confirmed authorized user try sign in with Facebook second time' do
@@ -33,8 +33,31 @@ feature 'User sign in with Social Network tokens', '
       visit new_user_session_path
       click_on 'Войти с помощью Facebook'
 
-      expect(page).to have_content 'Вход в систему выполнен с учетной записью из facebook.'
+      expect(page).to have_content 'Успешно вошли на сайт через facebook'
       expect(page).to have_content user_auth.email
+    end
+  end
+
+  describe 'Sign in with Twitter (without email)' do
+    given!(:auth) { OmniAuth.config.mock_auth[:twitter] }
+    given(:email) { 'twitter@user.ru' }
+
+    scenario 'New user try sign in with Twitter first time' do
+      # pry
+      visit new_user_session_path
+      click_on 'Войти с помощью Twitter'
+      
+      expect(page).to have_content 'Успешная авторизация через twitter'
+      expect(page).to have_content 'Чтобы авторизоваться через twitter укажите email'
+
+      fill_in 'email', with: email
+      click_on 'Сохранить'
+
+      open_email(email)
+      current_email.click_link 'Подтвердить мой аккаунт'
+
+      expect(page).to have_content 'Успешно вошли на сайт через twitter'
+      expect(page).to have_content email
     end
   end
 end
