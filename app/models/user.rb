@@ -12,6 +12,14 @@ class User < ApplicationRecord
     obj&.user_id == id
   end
 
+  def self.generate(email)
+    password = Devise.friendly_token(10)
+    user = User.new(email: email, password: password, password_confirmation: password)
+    user.skip_confirmation!
+    user.save!
+    user
+  end
+
   def self.from_omniauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
@@ -25,10 +33,7 @@ class User < ApplicationRecord
                                  confirmed_at: Time.zone.now)
     else
       # Если пользователя создавать с нуля
-      password = Devise.friendly_token(10)
-      user = User.new(email: email, password: password, password_confirmation: password)
-      user.skip_confirmation!
-      user.save!
+      user = User.generate(email)
       user.authorizations.create(provider: auth.provider, 
                                  uid: auth.uid, 
                                  confirmed_at: Time.zone.now)

@@ -1,7 +1,27 @@
 class Authorization < ApplicationRecord
   belongs_to :user
 
-  after_create :generate_token
+  after_create :generate_token, :send_confirmation
+
+  def self.generate(params)
+    user = User.where(email: params[:email]).first || User.generate(params[:email])
+    Authorization.create(provider: params[:provider], uid: params[:uid], user: user)
+  end
+
+  def confirm(token)
+    if token && token == confirmation_token
+      update! confirmed_at: Time.zone.now
+      true
+    else
+      false
+    end
+  end
+
+  def send_confirmation
+    unless confirmed_at
+      AuthorizationMailer.with(id: id).confirmation.deliver_now
+    end
+  end
 
   private
 

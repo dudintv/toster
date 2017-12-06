@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   # for OmniAuth
-  def success_sign_in(user, kind)
+  def success_omniauth_sign_in(user, kind)
     flash[:notice] = "Успешно вошли на сайт через #{kind}"
     sign_in_and_redirect user, event: :authentication
   end

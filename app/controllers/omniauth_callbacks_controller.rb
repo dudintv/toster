@@ -19,7 +19,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @authorization
       if @authorization.confirmed_at.present?
-        success_sign_in(@authorization.user, @authorization.provider)
+        success_omniauth_sign_in(@authorization.user, @authorization.provider)
       else
         @email = @authorization.user.email
         render 'authorization/unconfirmed'
@@ -30,13 +30,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def create_new_authorization
-    # pry
     if @auth.info && @auth.info[:email]
       @user = User.from_omniauth(@auth)
       if @user&.persisted?
-        success_sign_in(@user, @auth.provider)
+        success_omniauth_sign_in(@user, @auth.provider)
       else
-        session["#{@auth.provider}.omniauth_data"] = request.env['omniauth.auth']
         redirect_to new_user_registration_url
       end
     else
