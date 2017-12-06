@@ -50,4 +50,5 @@ Rails.application.configure do
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(provider: 'facebook', uid: '123', info: { email: 'facebook@user.com' })
   OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(provider: 'twitter', uid: '456')
+  OmniAuth.config.mock_auth[:vkontakte] = OmniAuth::AuthHash.new(provider: 'vkontakte', uid: '789')
 end

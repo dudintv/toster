@@ -43,7 +43,6 @@ feature 'User sign in with Social Network tokens', '
     given(:email) { 'twitter@user.ru' }
 
     scenario 'New user try sign in with Twitter first time' do
-      # pry
       visit new_user_session_path
       click_on 'Войти с помощью Twitter'
       
@@ -55,6 +54,36 @@ feature 'User sign in with Social Network tokens', '
 
       open_email(email)
       current_email.click_link 'Подтвердить мой аккаунт'
+
+      expect(page).to have_content 'Успешно вошли на сайт через twitter'
+      expect(page).to have_content email
+    end
+
+    scenario 'User try sign in with Twitter first time with existing email' do
+      user = create(:user, email: email)
+
+      visit new_user_session_path
+      click_on 'Войти с помощью Twitter'
+      
+      expect(page).to have_content 'Успешная авторизация через twitter'
+      expect(page).to have_content 'Чтобы авторизоваться через twitter укажите email'
+
+      fill_in 'email', with: email
+      click_on 'Сохранить'
+
+      open_email(email)
+      current_email.click_link 'Подтвердить мой аккаунт'
+
+      expect(page).to have_content 'Успешно вошли на сайт через twitter'
+      expect(page).to have_content email
+    end
+
+    scenario 'Existing and confirmed authorized user try sign in with Twitter second time' do
+      user = create(:user, email: email)
+      create(:authorization, user: user, provider: auth.provider, uid: auth.uid, confirmed_at: Time.zone.now)
+
+      visit new_user_session_path
+      click_on 'Войти с помощью Twitter'
 
       expect(page).to have_content 'Успешно вошли на сайт через twitter'
       expect(page).to have_content email

@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
-         :omniauthable, omniauth_providers: [:facebook, :twitter]
+         :omniauthable, omniauth_providers: [:facebook, :twitter, :vkontakte]
 
   def author_of?(obj)
     obj&.user_id == id
