@@ -60,7 +60,7 @@ feature 'User sign in with Social Network tokens', '
     end
 
     scenario 'User try sign in with Twitter first time with existing email' do
-      user = create(:user, email: email)
+      create(:user, email: email)
 
       visit new_user_session_path
       click_on 'Войти с помощью Twitter'
@@ -86,6 +86,58 @@ feature 'User sign in with Social Network tokens', '
       click_on 'Войти с помощью Twitter'
 
       expect(page).to have_content 'Успешно вошли на сайт через twitter'
+      expect(page).to have_content email
+    end
+  end
+
+  describe 'Sign in with VK (without email)' do
+    given!(:auth) { OmniAuth.config.mock_auth[:vkontakte] }
+    given(:email) { 'vkontakte@user.ru' }
+
+    scenario 'New user try sign in with VK first time' do
+      visit new_user_session_path
+      click_on 'Войти с помощью Vkontakte'
+      
+      expect(page).to have_content 'Успешная авторизация через vkontakte'
+      expect(page).to have_content 'Чтобы авторизоваться через vkontakte укажите email'
+
+      fill_in 'email', with: email
+      click_on 'Сохранить'
+
+      open_email(email)
+      current_email.click_link 'Подтвердить мой аккаунт'
+
+      expect(page).to have_content 'Успешно вошли на сайт через vkontakte'
+      expect(page).to have_content email
+    end
+
+    scenario 'User try sign in with VK first time with existing email' do
+      create(:user, email: email)
+
+      visit new_user_session_path
+      click_on 'Войти с помощью Vkontakte'
+      
+      expect(page).to have_content 'Успешная авторизация через vkontakte'
+      expect(page).to have_content 'Чтобы авторизоваться через vkontakte укажите email'
+
+      fill_in 'email', with: email
+      click_on 'Сохранить'
+
+      open_email(email)
+      current_email.click_link 'Подтвердить мой аккаунт'
+
+      expect(page).to have_content 'Успешно вошли на сайт через vkontakte'
+      expect(page).to have_content email
+    end
+
+    scenario 'Existing and confirmed authorized user try sign in with VK second time' do
+      user = create(:user, email: email)
+      create(:authorization, user: user, provider: auth.provider, uid: auth.uid, confirmed_at: Time.zone.now)
+
+      visit new_user_session_path
+      click_on 'Войти с помощью Vkontakte'
+
+      expect(page).to have_content 'Успешно вошли на сайт через vkontakte'
       expect(page).to have_content email
     end
   end

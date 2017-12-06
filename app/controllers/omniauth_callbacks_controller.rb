@@ -2,7 +2,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :authorize, except: [:failure]
 
   def facebook; end
+
   def twitter; end
+
   def vkontakte; end
 
   def failure
