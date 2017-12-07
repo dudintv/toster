@@ -4,8 +4,8 @@ class Authorization < ApplicationRecord
   after_create :generate_token, :send_confirmation
 
   def self.generate(params)
-    user = User.where(email: params[:email]).first || User.generate(params[:email])
-    Authorization.create(provider: params[:provider], uid: params[:uid], user: user)
+    user = User.generate(params[:email])
+    Authorization.find_or_create_by(provider: params[:provider], uid: params[:uid], user: user)
   end
 
   def confirm(token)

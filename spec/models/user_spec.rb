@@ -93,4 +93,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.generate' do
+    let(:email) { 'genearate@email.com' }
+
+    it 'create and return confirmed user with fresh email' do
+      expect(User.generate(email)).to be_a User
+    end
+
+    it 'return existing user when email is occupied' do
+      create(:user, email: email)
+      expect(User.generate(email)).to be_a User
+    end
+  end
 end

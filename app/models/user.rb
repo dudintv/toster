@@ -13,6 +13,9 @@ class User < ApplicationRecord
   end
 
   def self.generate(email)
+    user = User.where(email: email).first
+    return user if user
+
     password = Devise.friendly_token(10)
     user = User.new(email: email, password: password, password_confirmation: password)
     user.skip_confirmation!
