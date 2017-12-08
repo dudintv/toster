@@ -29,6 +29,8 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
+
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
@@ -44,4 +46,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(provider: 'facebook', uid: '123', info: { email: 'facebook@user.com' })
+  OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(provider: 'twitter', uid: '456')
+  OmniAuth.config.mock_auth[:vkontakte] = OmniAuth::AuthHash.new(provider: 'vkontakte', uid: '789')
 end

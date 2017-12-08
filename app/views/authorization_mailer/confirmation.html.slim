@@ -1,0 +1,4 @@
+h1= "Подтверждение вход на сайт через #{@auth.provider}"
+p
+  | Чтобы подтвердить что это вход от вашего имени — перейдите по ссылке: 
+  = link_to 'Подтвердить мой аккаунт', confirm_authorization_url(@auth.id, token: @auth.confirmation_token)

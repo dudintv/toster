@@ -1,0 +1,16 @@
+.container
+  h1 Данный способ авторизации не подтвержден
+  p Пожалуйста, подтвердите что это ваш email, перейдя по ссылке в письме. 
+  p Если вы не получили письмо, то возможно:
+  ul
+    li
+      = link_to "Повторно выслать письмо", resend_authorization_path(@authorization), method: :post
+      |  на адрес #{@email}
+    li
+      | E-mail мог быть указан неверно. Можете поменять свой email:
+      = form_tag authorizations_path, class: 'form-inline' do |f|
+        .input-group
+          span.input-group-addon email
+          = text_field_tag 'email', @email, class: 'form-control'
+        = submit_tag 'Сохранить', class: 'btn btn-primary'
+

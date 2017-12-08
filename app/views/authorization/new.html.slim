@@ -1,0 +1,11 @@
+.container
+  h1 Новый аккуант
+  p
+    | Чтобы авторизоваться через 
+    b= @auth.provider 
+    |  укажите email
+  = form_tag authorizations_path, class: 'form-inline' do |f|
+    .input-group
+      span.input-group-addon email
+      = text_field_tag 'email', @email, class: 'form-control'
+    = submit_tag 'Сохранить', class: 'btn btn-primary'
