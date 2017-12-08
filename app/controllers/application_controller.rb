@@ -2,6 +2,7 @@ require 'application_responder'
 
 class ApplicationController < ActionController::Base
   include Pundit
+  after_action :verify_authorized
 
   self.responder = ApplicationResponder
   respond_to :html
