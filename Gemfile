@@ -84,6 +84,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
+gem 'pundit'
 
 # Тестирование
 group :development, :test do
