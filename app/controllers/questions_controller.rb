@@ -37,13 +37,13 @@ class QuestionsController < ApplicationController
     authorize @question
     gon_question
     save_attachments
-    respond_with(@question.update(question_params)) if current_user.author_of?(@question)
+    respond_with(@question.update(question_params))
   end
 
   def destroy
     @question = Question.find(params[:id])
     authorize @question
-    respond_with(@question.destroy) if current_user.author_of?(@question)
+    respond_with(@question.destroy)
   end
 
   private

@@ -18,15 +18,15 @@ class AnswersController < ApplicationController
 
   def update
     save_attachments
-    respond_with(@answer.update(answer_params)) if current_user.author_of?(@answer)
+    respond_with(@answer.update(answer_params))
   end
 
   def destroy
-    respond_with(@answer.delete) if current_user.author_of?(@answer)
+    respond_with(@answer.delete)
   end
 
   def set_as_best
-    respond_with(@answer.set_as_best) if current_user.author_of?(@question)
+    respond_with(@answer.set_as_best)
   end
 
   private
