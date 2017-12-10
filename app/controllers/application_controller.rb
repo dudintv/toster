@@ -2,7 +2,7 @@ require 'application_responder'
 
 class ApplicationController < ActionController::Base
   include Pundit
-  after_action :verify_authorized # pundid checking for set Pundid for all controllers 
+  after_action :verify_authorized, except: :index # pundid checking for set Pundid for all controllers 
   rescue_from Pundit::NotAuthorizedError, with: :pundid_permission_denied
 
   self.responder = ApplicationResponder
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pundid_permission_denied
-    flash[:alert] = 'Извините. Это действие запрещено.'
+    flash[:alert] = 'Отказано в доступе.'
     redirect_to request.referrer || root_path
   end
 end

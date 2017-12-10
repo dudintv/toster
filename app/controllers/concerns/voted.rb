@@ -2,8 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_votable, only: [:vote_up, :vote_down, :vote_cancel]
-    before_action :author_of?, only: [:vote_up, :vote_down, :vote_cancel]
+    before_action :load_and_authorize_votable, only: [:vote_up, :vote_down, :vote_cancel]
   end
 
   def vote_up
@@ -23,12 +22,9 @@ module Voted
 
   private
 
-  def set_votable
+  def load_and_authorize_votable
     @votable = model_klass.find(params[:id])
-  end
-
-  def author_of?
-    head :forbidden if current_user.author_of?(@votable)
+    authorize @votable
   end
 
   def model_klass

@@ -124,7 +124,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'render destroy.js' do
           delete_my_answer
-          expect(response).to render_template('answers/destroy')
+          expect(response).to render_template 'answers/destroy'
         end
       end
 
@@ -135,9 +135,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { delete_foreign_answer }.to_not change(Answer, :count)
         end
 
-        it 'render destroy.js' do
+        it '302 status' do
           delete_foreign_answer
-          expect(response).to render_template 'answers/destroy'
+          expect(response).to have_http_status 302
         end
       end
     end

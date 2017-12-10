@@ -2,8 +2,8 @@ class AnswersController < ApplicationController
   include Voted
 
   before_action :authenticate_user!
-  before_action :set_answer, except: [:create]
-  before_action :set_question, except: [:create]
+  before_action :load_and_authorize_answer, except: [:create]
+  before_action :load_question, except: [:create]
   after_action :publish_answer, only: [:create]
 
   respond_to :js, only: [:create, :update, :destroy, :set_as_best]
@@ -11,6 +11,7 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.create(answer_params.merge(user: current_user))
+    authorize @answer
     save_attachments
     respond_with @answer
   end
@@ -34,11 +35,12 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
   end
 
-  def set_answer
+  def load_and_authorize_answer
     @answer = Answer.find(params[:id])
+    authorize @answer
   end
 
-  def set_question
+  def load_question
     @question = @answer.question
   end
 

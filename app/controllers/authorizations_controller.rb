@@ -1,4 +1,6 @@
 class AuthorizationsController < ApplicationController
+  skip_after_action :verify_authorized
+  
   def confirm
     authorization = Authorization.find(params[:id])
     if authorization.confirm(params[:token])

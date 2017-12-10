@@ -50,4 +50,18 @@ class ApplicationPolicy
       scope
     end
   end
+
+  # VOTED
+
+  def vote_up?
+    user.present? && !user.author_of?(record)
+  end
+
+  def vote_down?
+    user.present? && !user.author_of?(record)
+  end
+
+  def vote_cancel?
+    user.present? && !user.author_of?(record)
+  end
 end

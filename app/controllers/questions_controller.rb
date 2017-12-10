@@ -12,6 +12,7 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.includes(:attachments, answers: [:attachments]).find(params[:id])
+    authorize @question
     gon_question
     @answer = Answer.new
     @answer.attachments.build
@@ -19,11 +20,13 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    authorize @question
     @question.attachments.build
   end
 
   def create
     @question = Question.create(question_params.merge(user: current_user))
+    authorize @question
     gon_question
     save_attachments
     respond_with @question
@@ -31,6 +34,7 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find(params[:id])
+    authorize @question
     gon_question
     save_attachments
     respond_with(@question.update(question_params)) if current_user.author_of?(@question)
@@ -38,6 +42,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
+    authorize @question
     respond_with(@question.destroy) if current_user.author_of?(@question)
   end
 

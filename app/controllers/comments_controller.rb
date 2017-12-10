@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(comment_params.merge(user: current_user))
+    authorize @comment
     respond_with(@comment.save)
   end
 

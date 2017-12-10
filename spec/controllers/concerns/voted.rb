@@ -28,9 +28,9 @@ shared_examples_for 'voted' do
         expect { vote_up }.to_not change(votable.votes, :count)
       end
 
-      it 'render status 403' do
+      it 'render status 302' do
         vote_up
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end
     end
   end
@@ -58,9 +58,9 @@ shared_examples_for 'voted' do
         expect { vote_down }.to_not change(votable.votes, :count)
       end
 
-      it 'render status 403' do
+      it 'render status 302' do
         vote_down
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
       end
     end
   end
@@ -87,8 +87,8 @@ shared_examples_for 'voted' do
         expect(votable.votes.count).to eq 0
       end
 
-      it 'render status 403' do
-        expect(response.status).to eq 403
+      it 'render status 302' do
+        expect(response.status).to eq 302
       end
     end
   end

@@ -1,4 +1,5 @@
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_after_action :verify_authorized
   before_action :authorize, except: [:failure]
 
   def facebook; end
