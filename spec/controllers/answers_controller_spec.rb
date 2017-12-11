@@ -135,9 +135,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { delete_foreign_answer }.to_not change(Answer, :count)
         end
 
-        it '302 status' do
+        it '403 status' do
           delete_foreign_answer
-          expect(response).to have_http_status 302
+          expect(response).to have_http_status 403
         end
       end
     end

@@ -20,16 +20,16 @@ feature 'User sign up', '
   scenario 'User sign up with non-unique email' do
     user.save
     sign_up(user)
-    expect(page).to have_content 'Emailуже существует'
+    expect(page).to have_content 'Email уже существует'
   end
 
   scenario 'User sign up with short password' do
     sign_up(user_short_password)
-    expect(page).to have_content 'Парольнедостаточной длины'
+    expect(page).to have_content 'Пароль недостаточной длины'
   end
 
   scenario 'User sign up with short password' do
     sign_up(user_wrong_email)
-    expect(page).to have_content 'Emailимеет неверное значение'
+    expect(page).to have_content 'Email имеет неверное значение'
   end
 end
