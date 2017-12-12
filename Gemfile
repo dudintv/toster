@@ -101,6 +101,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-email'
   gem 'database_cleaner'
+  gem 'json_spec'
   gem 'launchy'
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 3.1'
