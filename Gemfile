@@ -80,6 +80,8 @@ gem 'remotipart', '~> 1.3'
 # Авторизация
 gem 'devise'
 gem 'devise-i18n'
+gem 'doorkeeper'
+gem 'doorkeeper-i18n'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
