@@ -16,11 +16,24 @@ describe 'Profile API' do
 
     context 'authorized' do
       let(:me) { create :user }
-      let(:access_token) { create :access_token }
+      let(:access_token) { create :access_token, resource_owner_id: me.id }
+
+      before { get '/api/v1/profiles/me', params: { format: :json, access_token: access_token.token } }
 
       it 'returm 200 status' do
-        get '/api/v1/profiles/me', params: { format: :json, access_token: access_token.token }
         expect(response).to be_success
+      end
+
+      %w(id email created_at updated_at).each do |attr|
+        it "contains #{attr}" do
+          expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
+        end
+      end
+
+      %w(password encrypted_password).each do |attr|
+        it "not contains #{attr}" do
+          expect(response.body).to_not have_json_path(attr)
+        end
       end
     end
   end
