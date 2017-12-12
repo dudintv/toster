@@ -33,9 +33,9 @@ RSpec.describe AttachmentsController, type: :controller do
           expect { delete_foreign_attachment }.to_not change(Attachment, :count)
         end
 
-        it 'render destroy.js' do
+        it '403 status' do
           delete_foreign_attachment
-          expect(response).to render_template 'attachments/destroy'
+          expect(response).to have_http_status 403
         end
       end
     end

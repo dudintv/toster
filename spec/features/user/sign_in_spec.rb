@@ -21,7 +21,7 @@ feature 'User sign in', '
     fill_in 'Пароль', with: 'qwerty'
     click_on 'Войти'
 
-    expect(page).to have_content 'Неверный Email или пароль.'
+    expect(page).to have_content 'Неверный адрес эл. почты или пароль.'
     expect(current_path).to eq new_user_session_path
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OmniauthCallbacksController, type: :controller do
+RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   let(:user) { create(:user) }
 
   describe 'Facebook' do

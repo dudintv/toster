@@ -3,6 +3,11 @@
 
 ru:
   devise:
+    shared:
+      links:
+        sign_in_with_provider: "Войти с помощью %{provider}"
+
+  users:
     confirmations:
       confirmed: "Ваш адрес эл. почты успешно подтвержден."
       new:
