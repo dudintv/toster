@@ -3,7 +3,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def index
     @answers = @question.answers
-    # pry
     respond_with @answers, each_serializer: AnswerOnlySerializer
   end
 
