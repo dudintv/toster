@@ -42,6 +42,7 @@ Rails.application.routes.draw do
           get :others
         end
       end
+      resources :questions
     end
   end
 end
