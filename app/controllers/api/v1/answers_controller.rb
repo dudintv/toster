@@ -3,15 +3,18 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def index
     @answers = @question.answers
+    # pry
     respond_with @answers, each_serializer: AnswerOnlySerializer
   end
 
   def show
     @answer = Answer.find(params[:id])
+    authorize @answer
     respond_with @answer
   end
 
   def create
+    authorize Answer
     @answer = Answer.create(answer_params.merge(question: @question, user: current_resource_owner))
     respond_with @answer
   end
