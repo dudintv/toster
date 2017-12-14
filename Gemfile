@@ -55,6 +55,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Формирование ответа
 gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 gem 'responders'
 
 # Качество кода
