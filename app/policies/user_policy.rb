@@ -22,22 +22,22 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    true
+    user.id == record.id
   end
 
   def update?
-    true
+    user.id == record.id
   end
 
   def destroy?
-    true
+    user.id == record.id
   end
 
   def me?
-    true
+    user.present?
   end
 
   def others?
-    true
+    user.present?
   end
 end

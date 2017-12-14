@@ -93,7 +93,7 @@ describe 'Question API' do
           expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path('attachments/0/url')
         end
       end
-      
+
       context 'comments' do
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path('comments')
@@ -104,6 +104,38 @@ describe 'Question API' do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
           end
         end
+      end
+    end
+  end
+
+  describe 'POST /create' do
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        post '/api/v1/questions/', params: { action: :create, format: :json, question: attributes_for(:question) }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token is invalid' do
+        post '/api/v1/questions/', params: { action: :create, access_token: '123', format: :json, question: attributes_for(:question) }
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      
+      before do
+        post '/api/v1/questions/', params: { action: :create, format: :json, access_token: access_token.token, question: attributes_for(:question) }
+      end
+
+      it 'returns success' do
+        expect(response).to be_success
+      end
+
+      it 'create question' do
+        expect do
+          post '/api/v1/questions/', params: { action: :create, format: :json, access_token: access_token.token, question: attributes_for(:question) }
+        end.to change(Question, :count).by(1)
       end
     end
   end
