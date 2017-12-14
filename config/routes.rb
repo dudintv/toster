@@ -31,4 +31,17 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
 
   mount ActionCable.server => '/cable'
+
+  # API
+  use_doorkeeper
+  namespace :api do
+    namespace :v1 do
+      resources :profiles do
+        collection do
+          get :me
+          get :others
+        end
+      end
+    end
+  end
 end
