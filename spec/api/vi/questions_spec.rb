@@ -41,6 +41,8 @@ describe 'Question API' do
 
     context 'authorized' do
       let(:question) { create(:question) }
+      let!(:attachment) { create(:attachment, attachable: question) }
+      let!(:comment) { create(:comment, commentable: question, user: question.user) }
 
       before { make_request access_token: access_token.token, question: question }
 
@@ -53,8 +55,6 @@ describe 'Question API' do
       end
 
       context 'attachments' do
-        let!(:attachment) { create(:attachment, attachable: question) }
-        
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path('attachments')
         end
@@ -65,8 +65,6 @@ describe 'Question API' do
       end
 
       context 'comments' do
-        let!(:comment) { create(:comment, commentable: question, user: question.user) }
-
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path('comments')
         end
