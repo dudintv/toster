@@ -34,9 +34,8 @@ describe 'Answers API' do
 
   describe 'GET /show' do
     def make_request(params = {})
-      question = params[:question] || create(:question)
       answer = params[:answer] || create(:answer)
-      get "/api/v1/questions/#{question.id}/answers/#{answer.id}", params: { format: :json }.merge(params)
+      get "/api/v1/answers/#{answer.id}", params: { format: :json }.merge(params)
     end
 
     it_behaves_like 'API Authorizable'
@@ -48,7 +47,7 @@ describe 'Answers API' do
       let!(:comment) { create(:comment, commentable: answer, user: question.user) }
 
       before do
-        make_request access_token: access_token.token, question: answer.question, answer: answer
+        make_request access_token: access_token.token, answer: answer
       end
 
       it 'returns 200 status code' do
