@@ -42,6 +42,9 @@ Rails.application.routes.draw do
           get :others
         end
       end
+      resources :questions do
+        resources :answers, shallow: true
+      end
     end
   end
 end
