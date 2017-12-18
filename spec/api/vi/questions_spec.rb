@@ -15,13 +15,9 @@ describe 'Question API' do
       let(:question) { questions.first }
       let!(:answer) { create :answer, question: question }
 
-      before do
-        make_request access_token: access_token.token
-      end
+      before { make_request access_token: access_token.token }
 
-      it 'returns 200 status code' do
-        expect(response).to be_success
-      end
+      it { expect(response).to be_success }
 
       it 'returns list of questions' do
         expect(response.body).to have_json_size 2
@@ -45,16 +41,10 @@ describe 'Question API' do
 
     context 'authorized' do
       let(:question) { create(:question) }
-      let!(:attachment) { create(:attachment, attachable: question) }
-      let!(:comment) { create(:comment, commentable: question, user: question.user) }
 
-      before do
-        make_request access_token: access_token.token, question: question
-      end
+      before { make_request access_token: access_token.token, question: question }
 
-      it 'returns 200 status code' do
-        expect(response).to be_success
-      end
+      it { expect(response).to be_success }
 
       %w(id title body created_at updated_at).each do |attr|
         it "question object contains #{attr}" do
@@ -63,6 +53,8 @@ describe 'Question API' do
       end
 
       context 'attachments' do
+        let!(:attachment) { create(:attachment, attachable: question) }
+        
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path('attachments')
         end
@@ -73,6 +65,8 @@ describe 'Question API' do
       end
 
       context 'comments' do
+        let!(:comment) { create(:comment, commentable: question, user: question.user) }
+
         it 'included in question object' do
           expect(response.body).to have_json_size(1).at_path('comments')
         end
@@ -94,13 +88,9 @@ describe 'Question API' do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      before do
-        make_request access_token: access_token.token
-      end
+      before { make_request access_token: access_token.token }
 
-      it 'returns success' do
-        expect(response).to be_success
-      end
+      it { expect(response).to be_success }
 
       it 'create question' do
         expect { make_request access_token: access_token.token }.to change(Question, :count).by(1)
