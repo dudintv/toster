@@ -1,0 +1,9 @@
+daily_digest_job:
+  cron: "0 0 * * *"
+  class: "DailyDigestJob"
+  queue: default
+
+new_answer_job:
+  cron: "0 0 * * *"
+  class: "NewAnswerJob"
+  queue: default

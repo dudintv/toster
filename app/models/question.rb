@@ -10,4 +10,20 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+
+  after_create :subscribe_author
+
+  scope :last_day, -> { where(created_at: 1.day.ago.all_day) }
+  
+  def subscribe_author
+    Subscription.create!(user: user, question: self)
+  end
+  
+  def subscribed_by?(user)
+    subscriptions.where(user: user).exists?
+  end
+  
+  def find_subscription(user)
+    subscriptions.where(user: user).first
+  end
 end
