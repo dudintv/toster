@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
   root to: 'questions#index'
 
@@ -29,6 +32,7 @@ Rails.application.routes.draw do
   end
 
   resources :attachments, only: :destroy
+  resources :subscriptions, only: [:create, :destroy]
 
   mount ActionCable.server => '/cable'
 
@@ -46,5 +50,9 @@ Rails.application.routes.draw do
         resources :answers, shallow: true
       end
     end
+  end
+
+  authenticate :user, lambda { |user| user.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 end
