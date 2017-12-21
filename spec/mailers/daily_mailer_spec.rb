@@ -13,7 +13,7 @@ RSpec.describe DailyMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('Hello')
+      expect(mail.html_part.decoded).to match('Ежедневный дайджест')
     end
   end
 end

@@ -1,27 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionPolicy do
-  let(:user) { User.new }
-
   subject { described_class }
-
-  permissions '.scope' do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  let(:guest) { nil }
+  let!(:user) { create :user }
+  let(:author) { create :user }
+  let(:question) { create :question }
+  let(:subscription) { create :subscription, user: author, question: question }
 
   permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+    it 'not allow to Guest creates subscription' do
+      expect(subject).not_to permit(guest, Subscription)
+    end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'allow to User creates subscription' do
+      expect(subject).to permit(user, Subscription)
+    end
   end
 
   permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'not allow to Guest destroy subscription' do
+      expect(subject).not_to permit(guest, subscription)
+    end
+
+    it 'not allow non-author destroy subscription' do
+      expect(subject).not_to permit(user, subscription)
+    end
+
+    it 'allow owner of subscription destroy own subscription' do
+      expect(subject).to permit(author, subscription)
+    end
   end
 end

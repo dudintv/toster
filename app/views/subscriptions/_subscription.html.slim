@@ -1,6 +1,6 @@
 - if policy(Subscription).create? && !question.subscribed_by?(current_user)
-  = link_to 'Подписаться', subscriptions_path(subscription: {question_id: question.id}), method: :post, remote: true
+  = link_to 'Подписаться', subscriptions_path(subscription: {question_id: question.id}), method: :post, remote: true, class: 'btn btn-secondary'
 
 - subscription = question.find_subscription(current_user)
 - if subscription && policy(subscription).destroy? && question.subscribed_by?(current_user)
-  = link_to 'Отписаться', subscription, method: :delete, remote: true
+  = link_to 'Отписаться', subscription, method: :delete, remote: true, class: 'btn btn-secondary'
