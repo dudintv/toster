@@ -1,9 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe NewAnswerJob, type: :job do
-  let(:answer) { create(:answer) }
-  it 'sends daily digest' do
-    expect(AnswerMailer).to receive(:notifier).with(answer, answer.question.user).and_call_original
+  let(:question) { create(:question) }
+  let(:subscriptions) { create_pair(:subscription, question: question) }
+  let(:foreign_users) { create_list(:user, 2) }
+  let!(:answer) { create(:answer, question: question) }
+
+  it 'sends new answer to all subscribers' do
+    question.subscriptions.each do |subscription|
+      expect(AnswerMailer).to receive(:notifier).with(answer, subscription.user).and_call_original
+    end
+    NewAnswerJob.perform_now(answer)
+  end
+
+  it 'not sends to not-subscribers' do
+    expect(answer.question.subscribers).to_not include foreign_users
+    
+    foreign_users.each do |fuser|
+      expect(AnswerMailer).to_not receive(:notifier).with(answer, fuser)
+    end
     NewAnswerJob.perform_now(answer)
   end
 end

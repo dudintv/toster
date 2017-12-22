@@ -6,6 +6,7 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user, class_name: 'User'
 
   validates :title, :body, presence: true
 
@@ -16,7 +17,7 @@ class Question < ApplicationRecord
   scope :last_day_questions, -> { where(created_at: Time.zone.now.all_day) }
   
   def subscribe_author
-    Subscription.create!(user: user, question: self)
+    subscriptions.create!(user: user)
   end
   
   def subscribed_by?(user)

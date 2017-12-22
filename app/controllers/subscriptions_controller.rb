@@ -4,8 +4,8 @@ class SubscriptionsController < ApplicationController
   respond_to :js
 
   def create
+    authorize Subscription
     @subscription = current_user.subscriptions.create(subscription_params)
-    authorize @subscription
     respond_with(@subscription, template: 'subscriptions/action')
   end
 
