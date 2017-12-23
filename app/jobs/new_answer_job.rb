@@ -3,7 +3,7 @@ class NewAnswerJob < ApplicationJob
 
   def perform(answer)
     answer.question.subscribers.each do |user|
-      AnswerMailer.notifier(answer, user).try(:deliver_later) unless answer.user == user
+      AnswerMailer.notifier(answer, user).try(:deliver_later) unless answer.user_id == user.id
     end
   end
 end

@@ -14,8 +14,6 @@ RSpec.describe NewAnswerJob, type: :job do
   end
 
   it 'not sends to not-subscribers' do
-    expect(answer.question.subscribers).to_not include foreign_users
-    
     foreign_users.each do |fuser|
       expect(AnswerMailer).to_not receive(:notifier).with(answer, fuser)
     end
