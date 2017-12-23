@@ -1,0 +1,7 @@
+<% if @subscription.errors.present? %>
+  <% @subscription.errors.full_messages.each do |message| %>
+    $('.errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+    $("#subscription").html('<%= j render 'subscriptions/subscription',question: @subscription.question %>')
+<% end %>

@@ -91,6 +91,11 @@ gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'pundit'
 
+# Фоновые задачи
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'sinatra', '>= 1.3.0', require: nil
+
 # Тестирование
 group :development, :test do
   gem 'factory_bot_rails'

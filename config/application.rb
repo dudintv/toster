@@ -45,5 +45,7 @@ module Toster
     config.i18n.default_locale = :ru
     config.i18n.locale = :ru
     config.time_zone = 'Moscow'
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

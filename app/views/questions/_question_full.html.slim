@@ -9,6 +9,9 @@
   - else
     .float-right
       = render 'votes/vote', votable: question
+
+  .float-right#subscription
+    = render 'subscriptions/subscription', question: question
     
   h1= question.title
   small.text-muted= "Автор: #{question.user&.email}"

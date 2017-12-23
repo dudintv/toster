@@ -12,6 +12,8 @@ class Answer < ApplicationRecord
 
   default_scope { order(best: :desc, created_at: :asc) }
 
+  after_commit :notify_subscribers, on: :create
+
   def set_as_best
     Answer.record_timestamps = false
     Answer.transaction do
@@ -19,5 +21,9 @@ class Answer < ApplicationRecord
       update!(best: true) unless best
     end
     Answer.record_timestamps = true
+  end
+
+  def notify_subscribers
+    NewAnswerJob.perform_later(self)
   end
 end
