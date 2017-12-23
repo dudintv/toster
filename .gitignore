@@ -28,3 +28,7 @@ config/database.yml
 /public/packs
 /public/packs-test
 /node_modules
+
+# sphinx
+config/*.sphinx.conf
+db/sphinx

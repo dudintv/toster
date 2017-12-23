@@ -96,6 +96,10 @@ gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sinatra', '>= 1.3.0', require: nil
 
+# Полнотекстовый поиск
+gem 'mysql2'
+gem 'thinking-sphinx'
+
 # Тестирование
 group :development, :test do
   gem 'factory_bot_rails'
