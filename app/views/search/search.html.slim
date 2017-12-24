@@ -2,5 +2,4 @@
   h1= "Результат поиска «#{params[:search_string]}» в #{params[:search_object]}"
 
   - @results.each do |result|
-    .card
-      .card-body= link_to result.class.to_s, result rescue result.to_s
+    = render "search/#{result.class.to_s.downcase}", object: result
