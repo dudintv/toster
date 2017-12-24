@@ -5,7 +5,7 @@ class SearchPolicy < ApplicationPolicy
     end
   end
 
-  def search
+  def search?
     true
   end
 end
