@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   def search
     authorize Search
-    @results = Search.search_result(params[:search_string], params[:search_object])
+    @results = Search.search(params[:search_string], params[:search_object].to_s)
     respond_with(@results)
   end
 end
