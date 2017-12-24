@@ -2,6 +2,8 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  get 'search/search'
+
   root to: 'questions#index'
 
   devise_for :users, controllers: { 
