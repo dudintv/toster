@@ -1,2 +1,6 @@
-h1 Search#search
-p Find me in app/views/search/search.html.slim
+.container
+  h1= "Результат поиска «#{params[:search_string]}» в #{params[:search_object]}"
+
+  - @results.each do |result|
+    .card
+      .card-body= link_to result.class.to_s, result rescue result.to_s
