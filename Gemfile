@@ -103,6 +103,7 @@ gem 'thinking-sphinx'
 # Уставнока глобальных переменных среды
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 group :development do
   # Деплоймент
