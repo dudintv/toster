@@ -14,8 +14,8 @@ test:
   <<: *default
   database: toster_test
 
-production:
-  <<: *default
-  database: toster_production
-  username: dudintv
-  password: <%= ENV['TOSTER_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: toster_production
+#   username: dudintv
+#   password: <%= ENV['TOSTER_DATABASE_PASSWORD'] %>
