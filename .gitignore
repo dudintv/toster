@@ -24,7 +24,6 @@
 /spec/tmp
 
 config/database.yml
-config/secrets.yml
 /public/uploads
 /public/packs
 /public/packs-test
