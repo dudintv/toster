@@ -1,0 +1,7 @@
+.card
+  .card-body
+    h6.card-subtitle.text-muted
+      | Ответ на вопрос 
+      = link_to object.question.title, object.question
+    p.card-text= object.body
+  .card-footer.text-muted Автор: #{object.user.email}

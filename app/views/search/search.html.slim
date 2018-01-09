@@ -1,0 +1,10 @@
+.container#search-result
+  br
+  h2
+    = "Результат поиска по запросу «#{params[:search_string]}» "
+    - unless params[:search_object].to_s == ''
+      | в #{params[:search_object]}
+  h6= "Найдено элементов: #{@results.count}"
+
+  - @results.each do |result|
+    = render "search/#{result.class.to_s.downcase}", object: result
