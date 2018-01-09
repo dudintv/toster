@@ -101,8 +101,10 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 
 # Уставнока глобальных переменных среды
-gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'dotenv-rails'
+
+# Для компиляции ассетов
 gem 'therubyracer'
 
 group :development do

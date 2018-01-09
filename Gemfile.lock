@@ -118,6 +118,8 @@ GEM
     dotenv (1.0.2)
     dotenv-deployment (0.3.0)
       dotenv (~> 1.0)
+    dotenv-rails (1.0.2)
+      dotenv (= 1.0.2)
     erubi (1.7.0)
     et-orbi (1.0.8)
       tzinfo
@@ -439,8 +441,8 @@ DEPENDENCIES
   devise-i18n
   doorkeeper
   doorkeeper-i18n
-  dotenv
   dotenv-deployment
+  dotenv-rails
   factory_bot_rails
   font-awesome-rails
   gon
@@ -490,4 +492,4 @@ DEPENDENCIES
   webpacker
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
