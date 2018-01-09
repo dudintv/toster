@@ -100,7 +100,15 @@ gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx'
 
-# Тестирование
+group :development do
+  # Деплоймент
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+end
+
+# Разработка и Тестирование
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'letter_opener'
