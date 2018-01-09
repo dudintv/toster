@@ -101,7 +101,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 
 # Уставнока глобальных переменных среды
-gem 'dotenv-deployment', require: 'dotenv/deployment'
+# gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'dotenv-rails'
 
 # Для компиляции ассетов
