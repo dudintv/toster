@@ -100,6 +100,10 @@ gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx'
 
+# Уставнока глобальных переменных среды
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 group :development do
   # Деплоймент
   gem 'capistrano', require: false

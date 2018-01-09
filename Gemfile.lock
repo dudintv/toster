@@ -115,6 +115,9 @@ GEM
     doorkeeper (4.2.6)
       railties (>= 4.2)
     doorkeeper-i18n (4.0.0)
+    dotenv (1.0.2)
+    dotenv-deployment (0.3.0)
+      dotenv (~> 1.0)
     erubi (1.7.0)
     et-orbi (1.0.8)
       tzinfo
@@ -431,6 +434,8 @@ DEPENDENCIES
   devise-i18n
   doorkeeper
   doorkeeper-i18n
+  dotenv
+  dotenv-deployment
   factory_bot_rails
   font-awesome-rails
   gon
