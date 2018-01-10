@@ -11,4 +11,13 @@ set :deploy_to, "/home/deploy/toster"
 append :linked_files, 'config/database.yml'
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "node_modules", "client/node_modules"
+
+set :nvm_type, :user # or :system, depends on your nvm setup
+set :nvm_node, 'v9.3.0'
+set :nvm_map_bins, %w{node npm yarn}
+
+set :yarn_target_path, -> { release_path.join('client') } #
+set :yarn_flags, '--production --silent --no-progress'    # default
+set :yarn_roles, :all                                     # default
+set :yarn_env_variables, {}

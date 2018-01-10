@@ -98,7 +98,7 @@ gem 'sinatra', '>= 1.3.0', require: nil
 
 # Полнотекстовый поиск
 gem 'mysql2'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', '3.3.0'
 
 # Уставнока глобальных переменных среды
 # gem 'dotenv-deployment', require: 'dotenv/deployment'
