@@ -100,10 +100,6 @@ gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx', '3.3.0'
 
-# Уставнока глобальных переменных среды
-# gem 'dotenv-deployment', require: 'dotenv/deployment'
-gem 'dotenv-rails'
-
 # Для компиляции ассетов
 gem 'therubyracer'
 
@@ -125,6 +121,10 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.6'
+
+  # Уставнока глобальных переменных среды
+  # gem 'dotenv-deployment', require: 'dotenv/deployment'
+  gem 'dotenv-rails'
 end
 group :test do
   gem 'capybara'
