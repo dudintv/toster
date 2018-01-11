@@ -123,7 +123,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
 
   # Уставнока глобальных переменных среды
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
+  gem 'gem-that-requires-env-variables'
 end
 group :test do
   gem 'capybara'
