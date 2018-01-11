@@ -16,10 +16,8 @@ require 'sprockets/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-
 module Toster
   class Application < Rails::Application
-    Dotenv::Railtie.load
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
