@@ -123,7 +123,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
 
   # Уставнока глобальных переменных среды
-  # gem 'dotenv-deployment', require: 'dotenv/deployment'
   gem 'dotenv-rails'
 end
 group :test do
