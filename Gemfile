@@ -5,6 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Уставнока глобальных переменных среды — должно быть вначале
+gem 'dotenv-rails', require: 'dotenv/rails-now', groups: [:development, :test]
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
@@ -122,9 +125,6 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.6'
 
-  # Уставнока глобальных переменных среды
-  gem 'dotenv-rails', require: 'dotenv/rails-now'
-  gem 'gem-that-requires-env-variables'
 end
 group :test do
   gem 'capybara'
