@@ -102,7 +102,7 @@ gem 'thinking-sphinx', '3.3.0'
 
 # Уставнока глобальных переменных среды
 # gem 'dotenv-deployment', require: 'dotenv/deployment'
-gem 'dotenv-rails'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 # Для компиляции ассетов
 gem 'therubyracer'
