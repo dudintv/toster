@@ -54,7 +54,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # ##########################
 # Уставнока глобальных переменных среды — должно быть вначале
-gem 'dotenv-rails', require: 'dotenv/rails-now'
+gem 'dotenv-rails' #, require: 'dotenv/rails-now'
 
 # Формирование ответа
 gem 'active_model_serializers'
