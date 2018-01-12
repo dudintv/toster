@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Уставнока глобальных переменных среды — должно быть вначале
-gem 'dotenv-rails', require: 'dotenv/rails-now', groups: [:development, :test]
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
