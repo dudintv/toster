@@ -8,10 +8,13 @@ set :repo_url, "git@github.com:dudintv/toster.git"
 set :deploy_to, "/home/deploy/toster"
 
 # Default value for :linked_files is []
-append :linked_files, '.env', 'config/database.yml', 'config/secrets.yml'
+append :linked_files, '.env.production', 'config/database.yml', 'config/secrets.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/uploads", "node_modules", "client/node_modules"
+
+set :rvm_type, :user
+set :rvm_ruby_version, '2.4.1'
 
 set :nvm_type, :user # or :system, depends on your nvm setup
 set :nvm_node, 'v9.3.0'
