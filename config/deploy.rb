@@ -24,3 +24,5 @@ set :yarn_target_path, -> { release_path.join('client') } #
 set :yarn_flags, '--production --silent --no-progress'    # default
 set :yarn_roles, :all                                     # default
 set :yarn_env_variables, {}
+
+set :passenger_restart_with_touch, true
