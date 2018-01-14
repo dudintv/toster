@@ -10,6 +10,7 @@ require 'capistrano/rvm'
 require 'capistrano/nvm'
 require 'capistrano/yarn'
 require 'capistrano/sidekiq'
+require 'whenever/capistrano'
 
 # Load the SCM plugin appropriate to your project:
 #
