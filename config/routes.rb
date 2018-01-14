@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   get '/search' => 'search#search'
 
   devise_for :users, controllers: { 
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
   }
 
   resources :authorizations, only: [:new, :create] do
