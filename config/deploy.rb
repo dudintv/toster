@@ -26,3 +26,5 @@ set :yarn_roles, :all                                     # default
 set :yarn_env_variables, {}
 
 set :passenger_restart_with_touch, true
+
+# set :stage, :production

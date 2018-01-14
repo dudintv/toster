@@ -98,6 +98,7 @@ gem 'pundit'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sinatra', '>= 1.3.0', require: nil
+gem 'whenever'
 
 # Полнотекстовый поиск
 gem 'mysql2'
@@ -114,6 +115,7 @@ group :development do
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', require: false
   gem 'capistrano-yarn', require: false
 end
 
@@ -125,7 +127,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.6'
-
 end
 group :test do
   gem 'capybara'
