@@ -1,7 +1,7 @@
 Sidekiq.configure_server do |config|
-  config.redis = { password: 'my_qwerty_password' }
+  config.redis = {}
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { password: 'my_qwerty_password' }
+  config.redis = {}
 end
