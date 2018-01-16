@@ -91,3 +91,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+Sidekiq.configure_server do |config|
+  config.redis = { password: ENV['REDIS_PASSWORD'] }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { password: ENV['REDIS_PASSWORD'] }
+end

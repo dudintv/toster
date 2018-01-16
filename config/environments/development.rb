@@ -55,3 +55,11 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+
+Sidekiq.configure_server do |config|
+  config.redis = { password: 'my_qwerty_password' }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { password: 'my_qwerty_password' }
+end

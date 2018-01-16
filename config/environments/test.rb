@@ -52,3 +52,11 @@ Rails.application.configure do
   OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new(provider: 'twitter', uid: '456')
   OmniAuth.config.mock_auth[:vkontakte] = OmniAuth::AuthHash.new(provider: 'vkontakte', uid: '789')
 end
+
+Sidekiq.configure_server do |config|
+  config.redis = { password: 'my_qwerty_password' }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { password: 'my_qwerty_password' }
+end
