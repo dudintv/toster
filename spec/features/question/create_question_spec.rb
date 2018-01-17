@@ -8,7 +8,7 @@ feature 'Create question', '
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user creates question' do
+  scenario 'Authenticated user creates question', js: true do
     sign_in(user)
 
     visit questions_path
@@ -21,19 +21,19 @@ feature 'Create question', '
     expect(page).to have_content 'Ваш Вопрос успешно опубликован.'
   end
 
-  scenario 'Non-authenticated user tries to create question' do
+  scenario 'Non-authenticated user tries to create question', js: true do
     visit questions_path
     click_on 'Новый вопрос'
     expect(page).to have_content 'Вам необходимо войти в систему или зарегистрироваться.'
   end
 
-  scenario 'Authenticated user can not create question with invalid data' do
+  scenario 'Authenticated user can not create question with invalid data', js: true do
     sign_in(user)
     visit questions_path
     click_on 'Новый вопрос'
     click_on 'Создать Вопрос'
 
-    expect(page).to have_content 'Тут есть проблемы:'
+    expect(page).to have_content 'Есть проблемы с сохранением.'
     expect(page).to have_content 'Вопросне может быть пустым'
     expect(page).to have_content 'Подробности не может быть пустым'
   end

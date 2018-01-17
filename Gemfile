@@ -105,8 +105,10 @@ gem 'whenever'
 gem 'mysql2'
 gem 'thinking-sphinx', '3.3.0'
 
-# Для компиляции ассетов
-gem 'therubyracer'
+group :production do
+  # Для компиляции ассетов
+  gem 'therubyracer'
+end
 
 group :development do
   # Деплоймент
