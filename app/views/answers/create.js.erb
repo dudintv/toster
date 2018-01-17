@@ -3,12 +3,13 @@
     $('#new-answer-form').find('.form-answer-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  if ( $("#answer-<%= @answer.id %>")[0] === undefined) ) {
+  if ( $("#answer-<%= @answer.id %>")[0] === undefined ) {
     <% if remotipart_submitted? %>
       $('#answers').append('<%= j "#{render @answer}" %>');
     <% else %>
       $('#answers').append('<%= j render @answer %>');
     <% end %>
+
     
     $('#answer_body').val('');
     $('#answer_attachments_attributes_0_file').val('');

@@ -17,6 +17,8 @@ AllCops:
   DisplayCopNames: true
 
 
+# Bundler/DuplicatedGem:
+#   Enabled: false
 
 Layout/EndOfLine:
   EnforcedStyle: lf

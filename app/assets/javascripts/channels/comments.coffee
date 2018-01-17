@@ -9,7 +9,7 @@ App.comments = App.cable.subscriptions.create "CommentsChannel",
   received: (data) ->
     return if $("#comment-#{data['id']}")[0] != undefined
 
-    console.log(data)
+    # console.log(data)
     commentable_type = data.commentable_type
     commentable_id = data.commentable_id
 
@@ -20,8 +20,8 @@ App.comments = App.cable.subscriptions.create "CommentsChannel",
         block = $("#question-block")
 
 
-    console.log(block)
-    console.log(block.find(".comments"))
+    # console.log(block)
+    # console.log(block.find(".comments"))
 
     block.find(".comments").append App.utils.render('comment', data)
     block.find("#comment_body").val('')

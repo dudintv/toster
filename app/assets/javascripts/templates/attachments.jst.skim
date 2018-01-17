@@ -1,4 +1,3 @@
-- console.log @attachable['attachments']
 - if @attachable['attachments'].length > 0
   .attachments
     h6 Прикрепленные файлы
