@@ -6,6 +6,17 @@ ru:
     shared:
       links:
         sign_in_with_provider: "Войти с помощью %{provider}"
+    failure:
+      user:
+        already_authenticated: "Вы уже вошли в систему."
+        inactive: "Ваша учетная запись еще не активирована."
+        invalid: "Сочетание email и пароль не действительны."
+        last_attempt: "У вас осталась последняя попытка ввода пароля до блокировки учетной записи."
+        locked: "Ваша учетная запись заблокирована."
+        not_found_in_database: "Неверный %{authentication_keys} или пароль."
+        timeout: "Ваш сеанс закончился. Пожалуйста, войдите в систему снова."
+        unauthenticated: "Вам необходимо войти в систему или зарегистрироваться."
+        unconfirmed: "Вам надо подтвердить вашу учетную запись по ссылке в письме."
 
   users:
     confirmations:

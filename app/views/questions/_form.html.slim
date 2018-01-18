@@ -1,4 +1,4 @@
-= simple_form_for question, html: { class: 'form-horizontal' }, remote: true, authenticity_token: true do |f|
+= simple_form_for question, html: { class: 'form-horizontal' }, remote: action_name != 'new', authenticity_token: true do |f|
   ul.list-group.d-none#question-errors
   = f.error_notification
 
