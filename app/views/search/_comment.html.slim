@@ -1,7 +1,7 @@
 .card
   .card-body
     h6.card-subtitle.text-muted
-      | Комментарий к  
-      = link_to object.commentable.body, object.commentable
+      | Комментарий к 
+      = link_to object.commentable&.body, object.commentable
     p.card-text= object.body
   .card-footer.text-muted Автор: #{object.user.email}
