@@ -1,5 +1,6 @@
 test:
   mysql41: 9307
+  utf8: true
 production:
   mysql41: 3306
   user: root
@@ -7,3 +8,4 @@ production:
   indices_location: /home/deploy/toster/shared/db/sphinx
   configuration_file: /home/deploy/toster/shared/production.sphinx.conf
   binlog_path: /home/deploy/toster/shared/binlog
+  utf8: true
