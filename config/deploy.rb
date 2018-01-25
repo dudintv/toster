@@ -26,3 +26,10 @@ set :yarn_roles, :all                                     # default
 set :yarn_env_variables, {}
 
 set :passenger_restart_with_touch, true
+
+after 'deploy:publishing', 'deploy:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+end

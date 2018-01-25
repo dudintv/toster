@@ -40,6 +40,9 @@ Lint/InterpolationCheck:
 # Lint/ScriptPermission:
 #   Enabled: true
 
+Lint/HandleExceptions:
+  Enabled: false
+
 Lint/UselessAccessModifier:
   MethodCreatingMethods:
     - 'def_matcher'

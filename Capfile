@@ -11,6 +11,7 @@ require 'capistrano/nvm'
 require 'capistrano/yarn'
 require 'capistrano/sidekiq'
 require 'whenever/capistrano'
+require 'capistrano3/unicorn'
 
 # Load the SCM plugin appropriate to your project:
 #

@@ -153,3 +153,4 @@ SimpleForm.setup do |config|
     time: :multi_select
   }
 end
+# rubocop:enable Metrics/BlockLength

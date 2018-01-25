@@ -18,9 +18,7 @@ class Authorization < ApplicationRecord
   end
 
   def send_confirmation
-    unless confirmed_at
-      AuthorizationMailer.with(id: id).confirmation.deliver_now
-    end
+    AuthorizationMailer.with(id: id).confirmation.deliver_now unless confirmed_at
   end
 
   private
