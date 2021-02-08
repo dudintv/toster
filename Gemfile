@@ -81,7 +81,7 @@ gem 'skim'
 gem 'slim-rails'
 
 # Изображения
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 gem 'remotipart', '~> 1.3'
 
 # Авторизация
